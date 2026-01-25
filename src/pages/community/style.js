@@ -214,7 +214,7 @@ export const SectionDesc = styled.p`
 export const CaroselBody = styled.div`
   position: relative;
   width: 100%;
-  padding: 0 130px;
+  /* padding: 0 130px; */
 `
 
 // 잘라내는 창
@@ -226,10 +226,10 @@ export const CarouselViewport = styled.div`
 // 카드들이 한 줄로 가로 나열되는 트랙
 export const CarouselTrack = styled.div`
   display: flex;
-  gap: 40px;
+  gap: 22px; // 여기 gap 건드릴거면 const GAP 과 동일해야함 EX) const GAP = 20 면 gap: 20px;
+  transition: transform 0.28s ease;
+  will-change: transform;
 
-  /* 나중에 슬라이드 붙일 때 */
-  /* transition: transform 0.25s ease; */
 `
 
 // 좌/우 네비 버튼(뼈대)
@@ -243,21 +243,40 @@ export const CarouselNavButton = styled.button`
    width: 50px; // 피그마상 60px
    height: 50px;
    border-radius: 50%;
-
-    z-index: 10;
+   z-index: 10;
     
-  border: 1px solid ${({ theme }) => theme.PALLETE.gray[300]};
+  /* border: 1px solid ${({ theme }) => theme.PALLETE.gray[300]}; */
   background: ${({ theme }) => theme.PALLETE.background.white};
   cursor: pointer;
+  box-shadow: 0px 1px 4px 4px rgba(0,0,0,0.03);
 
-  /* display: inline-flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center; */
+  justify-content: center;
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  // 화살표 아이콘
+   &::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid ${({ theme }) => theme.PALLETE.gray[700]};
+    border-bottom: 2px solid ${({ theme }) => theme.PALLETE.gray[700]};
+    transform: ${({ $direction }) =>
+      $direction === "prev" ? "rotate(135deg)" : "rotate(-45deg)"};
+    margin-left: ${({ $direction }) => ($direction === "prev" ? "2px" : "0")};
+  }
 `
 
 // 카드 뼈대
 export const CarouselCard = styled.button`
-  min-width: 325px;
+  width: ${({ $w }) => ($w ? `${$w}px` : "280px")};
+  flex: 0 0 auto;
+
   border: 1px solid ${({ theme }) => theme.PALLETE.gray[200]};
   border-radius: 10px;
   background: ${({ theme }) => theme.PALLETE.background.white};
@@ -265,6 +284,7 @@ export const CarouselCard = styled.button`
   cursor: pointer;
   overflow: hidden;
   text-align: left;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 `
 
 // 이미지 영역 placeholder
@@ -278,15 +298,32 @@ export const CardImageArea = styled.img`
 
 // 내용 영역 placeholder
 export const CardContentArea = styled.div`
-  padding: 24px;
+  /* padding: 24px; */
+  padding: 18px 20px 20px;
 `
 
 export const CardTitleRow = styled.div`
   ${flexBetweenRow};
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 0;
 
 `
+export const ProfileImg = styled.img`
+  width: 26px;     
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+`
+
+
+export const CardTitleLeft = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0; /* 제목 길면 줄임표 처리용 */
+`
+
 export const CardTitle = styled.p`
   ${FONT_STYLE.PRETENDARD.H7_REGULAR};
   color: ${({ theme }) => theme.PALLETE.mainblack};
@@ -302,6 +339,11 @@ export const HeartIcon = styled.span`
   width: 19px;
   height: 15px;
   display: inline-block;
+  
+  background-image: url("/assets/icons/red_heart.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 
 `
 
@@ -310,42 +352,80 @@ export const LikeCount = styled.span`
   color: ${({ theme }) => theme.PALLETE.mainblack};
 `
 
+export const CardDivider = styled.div`
+  width: 100%;
+  height: 1px;
+  background: ${({ theme }) => theme.PALLETE.gray[200]};
+  margin: 14px 0 12px;  /* 위아래 간격은 취향(사진 느낌이면 이 정도) */
+`;
+
 export const CardMetaRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 17px;
-  margin-bottom: 15px;
+  /* gap: 17px; */
+  gap: 10px;
+  /* margin-bottom: 15px; */
+  margin-bottom: 12px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+
 `
+export const MetaLeft = styled.div`
+  min-width: 0;
+  flex: 1 1 auto;
+`;
+
 export const UserNickName = styled.p`
   ${FONT_STYLE.PRETENDARD.H7_REGULAR};
   color: ${({ theme }) => theme.PALLETE.mainblack};
-  // 세미볼드로 폰트웨이트 설정
+  font-weight: 600; 
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
 `
-export const BadgeChipWrap = styled.div`
-  display: flex;
-  gap: 17px;
-`
-export const BadgeChipIcon = styled.img`
-  width: 16px;
-  height: 16px;
-`
+export const MetaCenter = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+`;
 
 export const BadgeChip = styled.span`
   ${FONT_STYLE.PRETENDARD.H7_REGULAR};
-  padding: 9px;
+  /* padding: 9px; */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
   border-radius: 6px;
   background: ${({ theme }) => theme.PALLETE.primary.sub};
   color: ${({ theme }) => theme.PALLETE.primary.main};
-  // 세미볼드로 폰트웨이트 설정
-`
+  font-weight: 600;
+  white-space: nowrap; // 줄바꿈 방지
+  `
+  export const BadgeChipIcon = styled.img`
+    width: 16px;
+    height: 16px;
+    display: block;
+  `
 export const BadgeChip2 = styled.span`
   ${FONT_STYLE.PRETENDARD.H7_REGULAR};
-  padding: 9px;
+  font-weight: 600;
+
+  padding: 6px 10px;
   border-radius: 6px;
   background: #DFF7F1; // theme에 지정컬러 없음
   color: ${({ theme }) => theme.PALLETE.secondary};
+
+  white-space: nowrap;
 `
+
+export const MetaRight = styled.div`
+  flex: 0 0 auto;
+  white-space: nowrap;
+`;
 
 export const CardDateText = styled.span`
   ${FONT_STYLE.PRETENDARD.H8_REGULAR};
