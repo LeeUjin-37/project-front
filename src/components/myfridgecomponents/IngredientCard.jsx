@@ -1,9 +1,9 @@
 import React from "react";
 import { CardStyle, CardTextStyle, IconStyle } from "../../pages/myfridge/style";
 
-const IngredientCard = ({ name }) => {
+const IngredientCard = ({ name, active, onClick }) => {
   return (
-    <CardStyle>
+    <CardStyle active={active} onClick={onClick}>
       <IconStyle>🥬</IconStyle>
       <CardTextStyle>{name}</CardTextStyle>
     </CardStyle>
