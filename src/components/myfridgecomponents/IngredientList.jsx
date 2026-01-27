@@ -3,7 +3,7 @@ import IngredientCard from "./IngredientCard";
 import { GridStyle, GridWrapperStyle } from "../../pages/myfridge/style";
 
 // 🔹 props로 ingredients 받기
-const IngredientList = ({ items }) => {
+const IngredientList = ({ items, deleteMode, selectedIds, onToggle }) => {
   // 임시 id → 이름 매핑 (지금 구조 기준)
   const ingredientMap = {
     1: "돼지고기",
@@ -16,10 +16,12 @@ const IngredientList = ({ items }) => {
       <GridStyle>
         {items.map((item) => (
           <IngredientCard
-            key={item.id}
+            key={item.fridgeId}
             name={ingredientMap[item.id]}
             quantity={item.quantity}
             expiredAt={item.expiredAt}
+            active={deleteMode && selectedIds.includes(item.fridgeId)}
+            onClick={() => deleteMode && onToggle(item.fridgeId)}
           />
         ))}
       </GridStyle>
