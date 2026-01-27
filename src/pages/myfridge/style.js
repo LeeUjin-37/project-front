@@ -1,6 +1,38 @@
 import styled from "styled-components";
 import { flexCenter, flexCenterColumn } from "../../styles/common";
 
+
+/* =========================
+   나의 냉장고 상단 배경 섹션
+========================= */
+export const FridgeHeaderSection = styled.div`
+  width: 100%;
+  background-color: #FFF9F5;   // 시안 톤
+`;
+
+// 안쪽 정렬용 레퍼
+export const FridgeHeaderInner = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 32px;
+`;
+
+/* =========================
+   페이지 타이틀 폰트
+========================= */
+
+export const FridgeTitle = styled.h2`
+  margin: 0 auto 24px auto;
+  width: 100%;
+  text-align: center;
+  font-family: 'Pretendard';
+  font-size: ${({ theme }) => theme.FONT_SIZE.h6};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.REGULAR};
+  color: #111111;
+`;
+
+
+
 /* ====================
       공통 버튼
 =================== */
@@ -78,10 +110,12 @@ export const FridgeHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
+  background-color: #FFF9F5;
+  `;
 
 // 재료 추가 / 삭제 / 수정 버튼 묶음
 export const FridgeButtonGroup = styled.div`
+  margin-left: auto;   // 오른쪽 끝으로 밀기
   display: flex;
   gap: 8px;
 `;
@@ -101,23 +135,20 @@ export const FridgeTopSection = styled.div`
 export const CategoryRow = styled.div`
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 2px;
   flex-wrap: wrap;
 `;
 
-// 개별 카테고리 버튼
+// 나의 냉장고 전체,채소,육류,해산물,유제품,가공품,기타 카테고리 버튼
 export const LayoutCategoryTab = styled.button`
   width: 90px;
   height: 34px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 6px;
   border: none;
-
-  font-size: 14px;
+  font-size: 15.8px;
   font-weight: 500;
   cursor: pointer;
 
