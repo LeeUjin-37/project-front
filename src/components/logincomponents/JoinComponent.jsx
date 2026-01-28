@@ -1,6 +1,6 @@
 import React from "react";
 import * as S from "../../pages/loginandjoin/style";
-import { openAppleLogin, openEmailLogin, openNaverLogin } from "./quickloginfunction";
+import { openAppleLogin, openEmailLogin, openNaverLogin } from "./function";
 
 const JoinComponent = () => {
   return (

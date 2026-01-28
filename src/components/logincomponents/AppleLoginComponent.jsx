@@ -1,6 +1,6 @@
 import React from "react";
 import * as S from "../../pages/loginandjoin/style";
-import { openAppleLogin } from "./quickloginfunction";
+import { openAppleLogin } from "./function";
 
 const AppleLoginComponent = () => {
   return (

@@ -1,9 +1,10 @@
 import React from 'react';
+import { openFindPw } from './function';
 
 const FindPwComponent = () => {
   return (
     <div>
-      <button>비밀번호 찾기</button>
+      <button onClick={openFindPw}>비밀번호 찾기</button>
     </div>
   );
 };

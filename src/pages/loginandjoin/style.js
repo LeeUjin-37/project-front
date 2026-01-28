@@ -110,6 +110,7 @@ ${flexCenter};
 ${FONT_STYLE.PRETENDARD.H7_LIGHT};
 color:${theme.PALLETE.gray.footerSub};
 `
+
 export const StyledJoinLink = styled(Link)`
 ${FONT_STYLE.PRETENDARD.H7_REGULAR};
 color:${theme.PALLETE.gray.footerSub};
@@ -239,11 +240,13 @@ ${FONT_STYLE.PRETENDARD.H7_REGULAR};
 color:${theme.PALLETE.gray.footerSub};
 `
 export const ToLoginDiv = styled.div`
-${FONT_STYLE.PRETENDARD.H8_REGULAR};
+${FONT_STYLE.PRETENDARD.H7_REGULAR};
 color:${theme.PALLETE.gray.footerSub};
 
 `
 export const JoinToLogin = styled(Link)`
-${FONT_STYLE.PRETENDARD.H8_SEMIBOLD};
+${FONT_STYLE.PRETENDARD.H7_SEMIBOLD};
 border-bottom: 1px solid ${theme.PALLETE.gray.footerSub};
 `
+
+/* ------------------------------------------------------- */

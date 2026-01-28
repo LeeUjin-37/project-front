@@ -1,6 +1,6 @@
 import React from "react";
 import * as S from "../../pages/loginandjoin/style";
-import { openNaverLogin } from "./quickloginfunction";
+import { openNaverLogin } from "./function";
 
 const NaverLoginComponent = () => {
 

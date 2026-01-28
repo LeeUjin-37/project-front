@@ -1,6 +1,6 @@
 import React from "react";
 import * as S from "./style"
-import { openKakaoLogin } from "../../components/logincomponents/quickloginfunction";
+import { openKakaoLogin } from "../../components/logincomponents/function";
 import JoinComponent from "../../components/logincomponents/JoinComponent";
 import { Link } from "react-router-dom";
 

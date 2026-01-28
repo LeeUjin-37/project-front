@@ -65,3 +65,37 @@ const openEmailLogin = () => {
     `width=${width},height=${height},left=${left},top=${top},resizable=no`,
   );
 };
+
+export // 팝업 창의 크기와 위치 설정
+const openFindId = () => {
+  const width = 450;
+  const height = 600;
+  const left = window.screen.width / 2 - width / 2;
+  const top = window.screen.height / 2 - height / 2;
+
+  // 이메일 로그인 API 주소
+  const Find_Id_AUTH_URL = ``;
+
+  window.open(
+    Find_Id_AUTH_URL,
+    "FindIdPopup",
+    `width=${width},height=${height},left=${left},top=${top},resizable=no`,
+  );
+};
+
+export // 팝업 창의 크기와 위치 설정
+const openFindPw = () => {
+  const width = 450;
+  const height = 600;
+  const left = window.screen.width / 2 - width / 2;
+  const top = window.screen.height / 2 - height / 2;
+
+  // 이메일 로그인 API 주소
+  const FindPw_AUTH_URL = ``;
+
+  window.open(
+    FindPw_AUTH_URL,
+    "FindPwPopup",
+    `width=${width},height=${height},left=${left},top=${top},resizable=no`,
+  );
+};

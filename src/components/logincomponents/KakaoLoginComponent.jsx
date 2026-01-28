@@ -1,6 +1,6 @@
 import React from "react";
 import * as S from "../../pages/loginandjoin/style";
-import { openKakaoLogin } from "./quickloginfunction";
+import { openKakaoLogin } from "./function";
 
 const KakaoLoginComponent = () => {
   return (
