@@ -48,3 +48,20 @@ const openAppleLogin = () => {
     `width=${width},height=${height},left=${left},top=${top},resizable=no`,
   );
 };
+
+export // 팝업 창의 크기와 위치 설정
+const openEmailLogin = () => {
+  const width = 450;
+  const height = 600;
+  const left = window.screen.width / 2 - width / 2;
+  const top = window.screen.height / 2 - height / 2;
+
+  // 이메일 로그인 API 주소
+  const Email_AUTH_URL = ``;
+
+  window.open(
+    Email_AUTH_URL,
+    "EmailLoginPopup",
+    `width=${width},height=${height},left=${left},top=${top},resizable=no`,
+  );
+};

@@ -123,17 +123,17 @@ ${flexCenter};
 
 export const QuickContainer = styled.div`
 width : calc(100% -30px);
-${flexCenter}
+${flexCenter};
 `
 
 export const LoginLegend = styled.legend`
-color : ${theme.PALLETE.gray[300]}
+color : ${theme.PALLETE.gray[300]};
 `
 
 export const QuickIconBox = styled.div`
-${flexCenter}
+${flexCenter};
 gap: 20px;
-margin:20px
+margin:20px;
 `
 export const QuickIconImg = styled.img`
 width : 56px;
@@ -142,17 +142,18 @@ cursor: pointer;
   filter:brightness(0.9);
 }
 `
+/* ------------------------------------------------- */
 export const JoinScreen = styled.div`
 width: 100%;
 height: 100%;
-${flexCenter}
+${flexCenter};
 `
 
 export const JoinH1 = styled.div`
   ${FONT_STYLE.GIANTS.H3_BOLD};
   ${flexCenter};
   color : ${theme.PALLETE.hederandfooter};
-  margin: 40px 0px;
+  margin: 60px 0px;
 `
 
 export const JoinContainer = styled.div`
@@ -168,6 +169,7 @@ ${flexCenter};
 background-color: #ffe940;
 border-radius: 5px;
 cursor:pointer;
+margin: 0px 0px 10px 0px;
 `
 
 export const JoinByKakaoSpan = styled.span`
@@ -186,6 +188,7 @@ export const JoinBanner = styled.img`
 width: 330px;
 object-fit : cover;
 border-radius:10px;
+margin: 0px 0px 20px 0px;
 `
 
 /* export const BannerText = styled.span`
@@ -197,3 +200,50 @@ border-radius:10px;
   color: white;       
   font-weight: bold;
 `; */
+
+export const JoinIconContainer = styled.div`
+width : calc(100%);
+${flexCenter};
+margin: 0px 0px 50px 0px;
+`
+
+export const StyledJoinFieldset = styled.fieldset`
+width: 330px;
+border-top:1px solid ${theme.PALLETE.gray[200]};
+${flexCenter};
+`
+
+export const JoinLegend = styled.legend`
+color : ${theme.PALLETE.gray[200]};
+`
+
+export const JoinIconBox = styled.div`
+${flexCenter};
+gap: 30px;
+margin:30px;
+`
+export const JoinIconImg = styled.img`
+width : 56px;
+cursor: pointer;
+&: hover {
+  filter:brightness(0.9);
+}
+`
+
+export const JoinIconWrap = styled.div`
+${flexCenterColumn};
+gap: 5px;
+`
+export const JoinSpan = styled.span`
+${FONT_STYLE.PRETENDARD.H7_REGULAR};
+color:${theme.PALLETE.gray.footerSub};
+`
+export const ToLoginDiv = styled.div`
+${FONT_STYLE.PRETENDARD.H8_REGULAR};
+color:${theme.PALLETE.gray.footerSub};
+
+`
+export const JoinToLogin = styled(Link)`
+${FONT_STYLE.PRETENDARD.H8_SEMIBOLD};
+border-bottom: 1px solid ${theme.PALLETE.gray.footerSub};
+`
