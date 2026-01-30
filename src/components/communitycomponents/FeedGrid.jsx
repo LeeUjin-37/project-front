@@ -12,7 +12,7 @@ import PostCard from "./PostCard";
 const PAGE_SIZE = 12;
 
 const FeedGrid = () => {
-  // ✅ 더미 데이터 (나중에 API 붙이면: page/cursor로 교체)
+  // 더미 데이터 (나중에 API 붙이면: page/cursor로 교체)
   const allItems = useMemo(
     () =>
       Array.from({ length: 60 }, (_, i) => ({
@@ -37,14 +37,14 @@ const FeedGrid = () => {
 
     setIsLoading(true);
 
-    // ✅ API 붙기 전까지는 “로딩 흉내”
+    //  API 붙기 전까지는 “로딩 흉내”
     setTimeout(() => {
       setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, allItems.length));
       setIsLoading(false);
     }, 350);
   }, [isLoading, hasMore, allItems.length]);
 
-  // ✅ 무한 스크롤 (IntersectionObserver)
+  // 무한 스크롤 (IntersectionObserver)
   useEffect(() => {
     const el = sentinelRef.current;
     if (!el) return;
@@ -67,7 +67,6 @@ const FeedGrid = () => {
 
   return (
     <S.FeedGridSection>
-      {/* 파란 박스: 그리드 */}
       <S.FeedGridWrap>
         {visibleItems.map((item) => (
           <PostCard key={item.id} item={item} w="100%" />
