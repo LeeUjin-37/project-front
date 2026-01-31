@@ -33,30 +33,6 @@ export const SortTabButton = styled.button`
   }
 `;
 
-/* ===========================
-   선택 표시 줄 (✓ 최신순)
-=========================== */
-
-export const SortHintRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end; /* 오른쪽 정렬 */
-  gap: 10px;
-  margin: 6px 0 22px;
-  padding-right: 20px;
-`;
-
-export const SortHintCheck = styled.span`
-  ${FONT_STYLE.PRETENDARD.H7_REGULAR};
-  color: ${({ theme }) => theme.PALLETE.mainblack};
-  font-weight: 700;
-`;
-
-export const SortHintTextActive = styled.span`
-  ${FONT_STYLE.PRETENDARD.H7_REGULAR};
-  color: ${({ theme }) => theme.PALLETE.mainblack};
-  font-weight: 600;
-`;
 
 /* ===========================
    Empty State

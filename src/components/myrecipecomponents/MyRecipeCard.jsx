@@ -1,4 +1,5 @@
-import React from "react";
+// MyRecipeCard.jsx (복붙용: 너 현재 코드 기준 + 토글할 때마다 애니메이션 재실행)
+import React, { useState } from "react";
 import * as S from "./style";
 
 const MyRecipeCard = ({ item, onClick, onToggleBookmark }) => {
@@ -8,55 +9,104 @@ const MyRecipeCard = ({ item, onClick, onToggleBookmark }) => {
     rating,
     xp,
     cookTimeMin,
-    difficulty,
     missingIngredients,
     imageUrl,
     saved,
   } = item;
 
-  // 저장한 레시피: 기본 saved=true (노란 북마크)
   const bookmarkIcon = saved
-    ? "/assets/icons/yellow_bookmark.png"
-    : "/assets/icons/bookmark.png";
+    ? "/assets/icons/bookmark_on.svg"
+    : "/assets/icons/bookmark_off.svg";
 
-  const handleBookmarkClick = (e) => {
-    e.stopPropagation(); // 카드 클릭(상세 이동) 막기
+  /* 토글할 때마다 애니메이션 강제 재실행용 */
+  const [animKey, setAnimKey] = useState(0);
+
+  /* ===============================
+     부족한 재료 텍스트 정규화
+     =============================== */
+  const missingText = (() => {
+    if (typeof missingIngredients === "number") return `${missingIngredients}개`;
+    if (Array.isArray(missingIngredients)) return `${missingIngredients.length}개`;
+
+    if (typeof missingIngredients === "string") {
+      const cleaned = missingIngredients
+        .replace(/부족한\s*재료\s*\|?\s*/g, "")
+        .trim();
+
+      if (/^\d+$/.test(cleaned)) return `${cleaned}개`;
+      if (/^\d+\s*개$/.test(cleaned)) return cleaned.replace(/\s+/g, "");
+
+      return cleaned;
+    }
+
+    return "-";
+  })();
+
+  /* ===============================
+     북마크 핸들러
+     =============================== */
+  const handleBookmarkToggle = (e) => {
+    e.stopPropagation();
     onToggleBookmark?.();
+    setAnimKey((k) => k + 1); // 클릭할 때마다 key 바꿔서 애니메이션 재실행
+  };
+
+  const handleBookmarkKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      e.stopPropagation();
+      onToggleBookmark?.();
+      setAnimKey((k) => k + 1); // 키보드 토글도 애니메이션 재실행
+    }
   };
 
   return (
-    <S.Card type="button" onClick={onClick}>
-      <S.ImageWrap>
-        <S.Thumb src={imageUrl} alt={title} />
+    <S.Card
+      type="button"
+      onClick={onClick}
+      role="link"
+      aria-label={`${title} 상세 보기`}
+    >
+      <S.ThumbArea>
+        <S.ThumbImg src={imageUrl} alt={title} loading="lazy" />
 
-        {/* 북마크 버튼 */}
-        <S.BookmarkButton type="button" onClick={handleBookmarkClick} aria-label="저장 해제">
-          <S.BookmarkIcon src={bookmarkIcon} alt="" />
-        </S.BookmarkButton>
-      </S.ImageWrap>
+        {/* 아이콘 자체가 버튼 + key로 애니메이션 리셋 */}
+        <S.BookmarkIcon
+          key={animKey}
+          src={bookmarkIcon}
+          alt={saved ? "북마크 해제" : "북마크 저장"}
+          role="button"
+          tabIndex={0}
+          aria-pressed={saved}
+          data-saved={saved ? "true" : "false"} // style.js에 pop 애니메이션 쓰는 경우 유지
+          onClick={handleBookmarkToggle}
+          onKeyDown={handleBookmarkKeyDown}
+        />
+      </S.ThumbArea>
 
       <S.Body>
-        <S.Title>{title}</S.Title>
-        <S.Desc>{desc}</S.Desc>
+        <S.Title title={title}>{title}</S.Title>
+
+        {desc && <S.Desc title={desc}>{desc}</S.Desc>}
+
+        <S.BadgeRow>
+          <S.Badge className="star">
+            <img
+              src="/assets/icons/star.svg"
+              alt=""
+              aria-hidden="true"
+              width="16"
+              height="16"
+            />
+            {rating}
+          </S.Badge>
+
+          <S.Badge className="xp">XP {xp}</S.Badge>
+        </S.BadgeRow>
 
         <S.MetaRow>
-          {/* ⭐ rating / XP */}
-          <S.InfoRow>
-            <S.Badge>
-              <S.BadgeText>★ {rating}</S.BadgeText>
-            </S.Badge>
-
-            <S.Badge>
-              <S.BadgeText>XP {xp}</S.BadgeText>
-            </S.Badge>
-          </S.InfoRow>
-
-          {/* 조리시간 / 난이도 / 부족한재료 */}
-          <S.InfoRow>
-            <S.InfoChip>{`조리시간 ${cookTimeMin}분`}</S.InfoChip>
-            <S.InfoChip>{`난이도 ${difficulty}`}</S.InfoChip>
-            <S.InfoChip>{missingIngredients}</S.InfoChip>
-          </S.InfoRow>
+          <S.MetaChip>{`조리시간 | ${cookTimeMin}분`}</S.MetaChip>
+          <S.MetaChip>{`부족한 재료 | ${missingText}`}</S.MetaChip>
         </S.MetaRow>
       </S.Body>
     </S.Card>

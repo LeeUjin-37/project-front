@@ -76,7 +76,7 @@ const PostCard = ({ item, w, width, onClick }) => {
 
           <S.MetaCenter>
             <S.BadgeChip>
-              <S.BadgeChipIcon src="/assets/icons/star.png" alt="별 아이콘" />
+              <S.BadgeChipIcon src="/assets/icons/star.svg" alt="별 아이콘" />
               Lv.{level}
             </S.BadgeChip>
 
