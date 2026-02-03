@@ -6,7 +6,6 @@ const MyLevelComponent1 = () => {
   return (
     <S.MyLevelWrap>
       <S.MyLevelField>
-        {" "}
         <S.MyLevelLegend>나의 레벨</S.MyLevelLegend>
         <LevelComponent/>
       </S.MyLevelField>

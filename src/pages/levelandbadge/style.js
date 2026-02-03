@@ -90,6 +90,7 @@ export const MyLevelProgressWrap = styled.div`
   border: 1px solid ${theme.PALLETE.gray[50]};
   background-color: ${theme.PALLETE.gray[50]};
   border-radius: ${theme.RADIUS.md};
+  display: flex;
 `;
 
 export const MyLevelProgressContainer = styled.div`
@@ -133,5 +134,24 @@ position:absolute;
 border-radius:9999px;
 width: 145px;
 z-index:1;
-top: 88px
+top: 88px;
+`
+
+export const LevelNextMedal = styled.img`
+width:165px;
+`
+
+export const LevelLabel = styled.div`
+  ${FONT_STYLE.PRETENDARD.H5_BOLD};
+  color: ${theme.PALLETE.headerandfooter};
+`
+
+export const LevelCurrent = styled.div`
+width:130px;
+height: 40px;
+border: 1px solid ${theme.PALLETE.primary.main};
+border-radius: 20px;
+color: ${theme.PALLETE.mainblack};
+${FONT_STYLE.PRETENDARD.H6_BOLD};
+${flexCenter};
 `

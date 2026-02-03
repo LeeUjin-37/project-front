@@ -22,29 +22,26 @@ const LevelComponent = ({ userLevel, userCurrentExp }) => {
       <S.MyLevelProfileWrap>
         <S.MyLevelProfileContainer src="\assets\images\bronze_frame.png" alt="레벨 프로필 테두리" />
         <S.MyLevelProfileImg src="\assets\images\pinggu.png" alt="예시 프로필 이미지"/>
-      </S.MyLevelProfileWrap>
+       </S.MyLevelProfileWrap>
 
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "8px",
-        }}
-      >
-        <strong>
-          LV. {level} {levelInfo.label}
-        </strong>
+      <div>
+        <div>
+            <S.LevelLabel>{levelInfo.label}</S.LevelLabel>
+            <S.LevelCurrent>현재 LV. {level}</S.LevelCurrent>
+        </div>
+        <S.MyLevelProgressContainer>
+          <S.MyLevelProgress width={progressPercent} />
+        </S.MyLevelProgressContainer>
+        <S.ExpText>
+          {currentExp.toLocaleString()} / {maxExp.toLocaleString()} EXP
+          ({progressPercent.toFixed(0)}%)
+        </S.ExpText>
       </div>
 
-      <S.MyLevelProgressContainer>
-        <S.MyLevelProgress width={progressPercent} />
-      </S.MyLevelProgressContainer>
+      <S.MyLevelProfileWrap>
+        <S.LevelNextMedal src="\assets\images\silver_medal.png" alt="다음 메달" />
+      </S.MyLevelProfileWrap>
 
-      <S.ExpText>
-        {currentExp.toLocaleString()} / {maxExp.toLocaleString()} EXP 
-        ({progressPercent.toFixed(0)}%)
-      </S.ExpText>
     </S.MyLevelProgressWrap>
   );
 };

@@ -205,7 +205,7 @@ margin: 0px 0px 20px 0px;
 export const JoinIconContainer = styled.div`
 width : calc(100%);
 ${flexCenter};
-margin: 0px 0px 50px 0px;
+margin: 0px 0px 10px 0px;
 `
 
 export const StyledJoinFieldset = styled.fieldset`
