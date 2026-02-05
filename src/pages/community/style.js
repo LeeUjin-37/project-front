@@ -53,7 +53,7 @@ export const SearchInput = styled.input`
 
   border-radius: 5px;
   border: 1px solid transparent;
-  background-color: ${({ theme }) => theme.PALLETE.gray[100]};
+  background-color: ${({ theme }) => theme.PALLETE.gray[50]};
 
   ${FONT_STYLE.PRETENDARD.H7_REGULAR};
 
@@ -93,8 +93,8 @@ export const SearchButton = styled.button`
 
 // 검색 아이콘
 export const SearchIcon = styled.img`
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
 `
 
 // 필터 버튼
@@ -121,8 +121,9 @@ export const FilterButton = styled.button`
 
 // 필터 아이콘
 export const FilterIcon = styled.img`
-  width: 23px;
-  height: 23px;
+  width: 24px;
+  height: 24px;
+  
 `
 // 정렬 드랍다운 감싸는 래퍼 (버튼 기준으로 드랍다운 위치 잡기)
 export const DropdownWrap = styled.div`

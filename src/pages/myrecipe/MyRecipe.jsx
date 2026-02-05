@@ -186,7 +186,7 @@ const MOCK_SAVED_RECIPES = [
 ];
 
 const MyRecipe = () => {
-  const isLoggedIn = false; // 로그인 모달 테스트용으로 false
+  const isLoggedIn = true; // 로그인 모달 테스트 보고 싶음 false
 
   const [keyword, setKeyword] = useState("");
   const [sortKey, setSortKey] = useState("saved_latest");

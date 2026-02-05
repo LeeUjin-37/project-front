@@ -67,7 +67,7 @@ export const CommunityHeader = ({
             placeholder={placeholder}
           />
           <S.SearchButton type="submit" aria-label="검색">
-            <S.SearchIcon src="/assets/icons/search.png" alt="검색 아이콘" />
+            <S.SearchIcon src="/assets/icons/search.svg" alt="검색 아이콘" />
           </S.SearchButton>
         </S.SearchWrap>
 
@@ -77,7 +77,7 @@ export const CommunityHeader = ({
               type="button"
               onClick={() => setIsOpen((prev) => !prev)}
             >
-              <S.FilterIcon src="/assets/icons/filter.png" alt="정렬 아이콘" />
+              <S.FilterIcon src="/assets/icons/filter.svg" alt="정렬 아이콘" />
               {sort.label}
             </S.FilterButton>
 
