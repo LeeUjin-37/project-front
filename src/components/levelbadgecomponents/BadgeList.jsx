@@ -56,4 +56,4 @@ const BadgeList = () => {
   );
 };
 
-export default BadgeList;
+export default BadgeList;   
