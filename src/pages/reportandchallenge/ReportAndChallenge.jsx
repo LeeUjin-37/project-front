@@ -1,22 +1,24 @@
-import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
-import ChallengeList from '../../components/reportchallengecomponents/ChallengeList';
-import ChallengeCompleteModal from '../../components/reportchallengecomponents/ChallengeCompleteModal';
-
+import React from "react";
+import ReportChallengeHero from "../../components/reportchallengecomponents/ReportChallengeHero";
+import ChallengeList from "../../components/reportchallengecomponents/ChallengeList";
+import ChallengeCompleteModal from "../../components/reportchallengecomponents/ChallengeCompleteModal";
 
 const ReportAndChallenge = () => {
   return (
     <div>
-      <h1>리포트&챌린지 페이지</h1>
-      <Outlet/> {/* 게시물 팝업 자리 */}
-      <Link to={"post/:postId"}>게시물 팝업</Link>
-      <ChallengeList/>
-      <ChallengeCompleteModal/>
-      <p>컴포넌트</p>
-      <p>컴포넌트</p>
-      <p>컴포넌트</p>
-      <p>컴포넌트</p>
-      <p>컴포넌트</p>
+      <ReportChallengeHero
+        onClickJoin={() => {
+          console.log("이번 주 챌린지 참여하기 클릭");
+        }}
+        images={{
+          bg: "/assets/images/reportandchallenge/v_bg.png",
+          deco: "/assets/images/reportandchallenge/v_obj01.png",
+          cardFrame: "/assets/images/reportandchallenge/v_frame.png",
+        }}
+      />
+
+      <ChallengeList />
+      <ChallengeCompleteModal />
     </div>
   );
 };
