@@ -5,7 +5,6 @@ import * as S from "../../pages/community/style";
 
 // 캐러셀 카드랑 100% 동일 UI
 // props 기반
-// 여기서만 상태 관리
 
 /**
  * PostCard
@@ -18,8 +17,8 @@ const PostCard = ({ item, w, width, onClick }) => {
   const cardWidth = w ?? width; // 둘 중 들어온 거 사용, 실수 방지
   // 지금은 더미(하드코딩)로 유지
   // 나중에 API 붙이면 item에서 값을 받아오면 됨
-  const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(item?.likes ?? 24);
+  const [liked, setLiked] = useState(false); // 하트 색채워짐 유무
+  const [likeCount, setLikeCount] = useState(item?.likes ?? 24); // 좋아요 수
 
   const handleLikeToggle = (e) => {
     e.stopPropagation() // 카드 클릭 막기 (하트가 카드 버튼 안에 있으면, 하트 눌러도 카드 클릭이 같이 터지니까 stopPropagation은 필수.)

@@ -284,14 +284,15 @@ export const CarouselCard = styled.button`
 
   flex: 0 0 auto;
 
-  border: 1px solid ${({ theme }) => theme.PALLETE.gray[200]};
+  /* border: 1px solid ${({ theme }) => theme.PALLETE.gray[200]}; // 피그마상 으론 이게 맞는데 테두리 들어가니 촌스러워짐 */
   border-radius: 10px;
   background: ${({ theme }) => theme.PALLETE.background.white};
   padding: 0;
   cursor: pointer;
   overflow: hidden;
   text-align: left;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  /* box-shadow: 0 2px 10px rgba(0,0,0,0.05); */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 
   &:hover img {
   transform: scale(1.03);
@@ -319,7 +320,6 @@ export const CardContentArea = styled.div`
 
 export const CardTitleRow = styled.div`
   ${flexBetweenRow};
-  align-items: center;
   margin-bottom: 0;
 
 `
@@ -357,8 +357,8 @@ export const HeartIcon = styled.span`
   
   background-image: ${({ $liked }) =>
     $liked
-      ? "url('/assets/icons/red_heart.png')"
-      : "url('/assets/icons/empty_heart.png')"};
+      ? "url('/assets/icons/heart.svg')"
+      : "url('/assets/icons/empty_heart.svg')"};
 
 
   background-repeat: no-repeat;
@@ -378,18 +378,16 @@ export const CardDivider = styled.div`
   width: 100%;
   height: 1px;
   background: ${({ theme }) => theme.PALLETE.gray[200]};
-  margin: 14px 0 12px;  /* 위아래 간격은 취향(사진 느낌이면 이 정도) */
+  margin: 14px 0 12px;  
 `;
 
 export const CardMetaRow = styled.div`
-  display: flex;
-  align-items: center;
+  ${flexBetweenRow}
   /* gap: 17px; */
   gap: 10px;
   /* margin-bottom: 15px; */
   margin-bottom: 12px;
   flex-wrap: nowrap;
-  justify-content: space-between;
 
 `
 export const MetaLeft = styled.div`
@@ -479,7 +477,7 @@ export const SectionDivider = styled.div`
 `
 
 // ** FeedGrid 부분
-// ✅ 피드 그리드(파란 박스)
+// 피드 그리드(파란 박스)
 export const FeedGridSection = styled.section`
   width: 100%;
   margin-top: 52px; /* 캐러셀 아래 간격 */
