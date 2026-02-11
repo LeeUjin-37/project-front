@@ -38,10 +38,10 @@ const FeedGrid = () => {
   }, [isLoading, hasMore, allItems.length]); // 이 값들 바뀌면 함수 재생성
 
   useEffect(() => {
-    const el = sentinelRef.current;
-    if (!el) return;
+    const sentinelElement = sentinelRef.current;
+    if (!sentinelElement) return;
 
-    const io = new IntersectionObserver( // 화면에 들어오는지 감시하는 브라우저 API
+    const observer = new IntersectionObserver( // 화면에 들어오는지 감시하는 브라우저 API
       (entries) => { // sentinel이 보이면 loadMore 실행
         const first = entries[0];
         if (first.isIntersecting) loadMore();
@@ -49,8 +49,8 @@ const FeedGrid = () => {
       { root: null, rootMargin: "200px", threshold: 0 }
     );
  
-    io.observe(el); // 감시 시작
-    return () => io.disconnect(); // 컴포넌트 언마운트 시 정리
+    observer.observe(sentinelElement); // 감시 시작
+    return () => observer.disconnect(); // 컴포넌트 언마운트 시 정리
   }, [loadMore]); // loadMore 바뀌면 observer 재설정
 
   // 모달 상태/선택된 게시물

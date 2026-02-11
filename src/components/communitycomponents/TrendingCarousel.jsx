@@ -20,25 +20,25 @@ const TrendingCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardW, setCardW] = useState(0);
 
-  // ✅ 뷰포트 기준으로 카드 폭 계산 (4개 딱 맞게)
-  useLayoutEffect(() => {
-    const el = viewportRef.current;
-    if (!el) return;
+  // 뷰포트 기준으로 카드 폭 계산 (4개 딱 맞게)
+  useLayoutEffect(() => { // 브라우저 페인트 전에 계산을 끝내서 깜빡임(layout shift)을 막기 위해, useEffect는 화면 보여준 다음 처리하는데 useLayoutEffect는 화면 보여주기 전에 처리함. 횐경 세팅용 effect
+    const viewportElement = viewportRef.current;
+    if (!viewportElement) return;
 
-    const update = () => {
-      const viewportWidth = el.getBoundingClientRect().width;
+    const updateCardWidth  = () => { // 카드 너비를 다시 계산하는 함수
+      const viewportWidth = viewportElement.getBoundingClientRect().width;
       const width = (viewportWidth - GAP * (VISIBLE - 1)) / VISIBLE;
       setCardW(width);
     };
 
-    update();
+    updateCardWidth();
 
     // 반응형 대비
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
+    const resizeObserver = new ResizeObserver(updateCardWidth); // 크기 변화를 감시하는 객체
+    resizeObserver.observe(viewportElement);
 
-    return () => ro.disconnect();
-  }, []);
+    return () => resizeObserver.disconnect();
+  }, []); // 의존성 배열이 빈배열인 이유는? 컴포넌트가 처음 마운트될 때 한 번 실행하고 언마운트될 때 정리하려고
 
   const maxIndex = Math.max(items.length - VISIBLE, 0);
   const step = cardW + GAP;
