@@ -1,14 +1,69 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import S from "./style";
+import { useNavigate } from "react-router-dom";
+
+import MyRecipeCard from "../../components/myrecipecomponents/MyRecipeCard";
 
 const FoodRecommendation = () => {
+  const navigate = useNavigate(); // 훅은 컴포넌트 안에서 호출해야 합니다.
+
+  const [recipes] = useState(
+    Array.from({ length: 12 }).map((_, i) => ({
+      id: i,
+      title: "김치찌개",
+      desc: "매콤하고 얼큰한 김치찌개",
+      rating: 4.8,
+      xp: 350,
+      cookTimeMin: 50,
+      missingIngredients: 2,
+      imageUrl: "/assets/images/kimchi_soup.png",
+      saved: false,
+    }))
+  );
+
+  const handleClickCard = (item) => {
+    // 라우터가 /foodrecommendation 아래에 "recommendRecipe/:foodId" 로 잡혀있으니
+    //    실제 이동 경로는 /foodrecommendation/recommendRecipe/ID 가 맞습니다.
+    navigate(`/foodrecommendation/recommendRecipe/${item.id}`, {
+      state: { recipe: item },
+    });
+  };
+
   return (
-    <div>
-      <h1>추천 요리 페이지</h1>
-      <p>컴포넌트</p>
-      <p>컴포넌트</p>
-      <Link to={"/foodrecommendation/recommendRecipe/:foodId"}>레시피 페이지</Link>
-    </div>
+    <S.Page>
+      <S.Container>
+        <S.HeaderSection>
+          <S.SectionTitle>오늘의 추천요리</S.SectionTitle>
+
+          <S.SearchRow>
+            <S.SearchWrap>
+              <S.SearchInput placeholder="요리명, 재료로 검색..." />
+              <S.SearchButton type="button">
+                <S.SearchIcon src="/assets/icons/search.svg" alt="검색" />
+              </S.SearchButton>
+            </S.SearchWrap>
+
+            <S.SortButton type="button">최신순</S.SortButton>
+          </S.SearchRow>
+        </S.HeaderSection>
+      </S.Container>
+
+      <S.FullDivider />
+
+      <S.Container>
+        <S.FeedGridSection>
+          <S.FeedGridWrap>
+            {recipes.map((item) => (
+              <MyRecipeCard
+                key={item.id}
+                item={item}
+                onClick={() => handleClickCard(item)}
+              />
+            ))}
+          </S.FeedGridWrap>
+        </S.FeedGridSection>
+      </S.Container>
+    </S.Page>
   );
 };
 
