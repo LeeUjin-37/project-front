@@ -204,7 +204,7 @@ export const SectionHeader = styled.div`
 
 export const SectionTitle = styled.h4` 
 // 피그마상 폰트사이즈 26px이지만 theme에 공용 사이즈 없어서 h4로 설정
-  ${FONT_STYLE.GIANTS.H4_REGULAR};
+  ${FONT_STYLE.GIANTS.H4_REGULAR}
   color: ${({ theme }) => theme.PALLETE.mainblack};
   margin-bottom: 18px;
   
