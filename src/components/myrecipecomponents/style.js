@@ -137,7 +137,7 @@ export const BookmarkIcon = styled.img`
     border-radius: 6px;
   }
 
-  /* ✅ 저장된 상태로 바뀔 때 살짝 튕김 */
+  /*  저장된 상태로 바뀔 때 살짝 튕김 */
   &[data-saved="true"] {
     animation: ${pop} 240ms ease-out;
   }

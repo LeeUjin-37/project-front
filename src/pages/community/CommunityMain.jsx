@@ -7,7 +7,7 @@ import FloatingActions from "../../components/layoutcomponents/FloatingActions";
 import CommunityPostModal from "../../components/communitycomponents/CommunityPostModal";
 
 const CommunityMain = () => {
-  // ✅ 모달 상태
+  //  모달 상태
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
 
@@ -27,7 +27,7 @@ const CommunityMain = () => {
     <Page>
       <div id="community-top" />
 
-      {/* ✅ 게시물 상세 모달 (라우터 ❌, UI 레이어 ⭕) */}
+      {/*  게시물 상세 모달 (라우터 x, UI 레이어 o) */}
       <CommunityPostModal
         open={isPostModalOpen}
         post={selectedPost}
@@ -48,7 +48,7 @@ const CommunityMain = () => {
         <TrendingCarousel />
         <SectionDivider />
 
-        {/* ✅ 카드 클릭 시 모달 열리도록 핸들러 전달 */}
+        {/*  카드 클릭 시 모달 열리도록 핸들러 전달 */}
         <FeedGrid onCardClick={handleOpenPostModal} />
       </Container>
 
