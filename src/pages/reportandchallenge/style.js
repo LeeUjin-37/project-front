@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { FONT_STYLE } from "../../styles/common";
 
+export const Page = styled.main`
+  width: 100%;
+  background: ${({ theme }) => theme.PALLETE.white};
+`;
+
 export const HeroSection = styled.section`
   position: relative;
   width: 100%;
@@ -182,7 +187,7 @@ export const ListTitle = styled.h3`
   ${FONT_STYLE.GIANTS.H3_BOLD};
   font-size: ${({ theme }) => theme.FONT_SIZE.h5};
   line-height: ${({ theme }) => theme.FONT_LINE.h6};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.BOLD};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.MEDIUM};
   color: ${({ theme }) => theme.PALLETE.mainblack};
 
   @media (max-width: 768px) {
@@ -286,7 +291,7 @@ export const TrendTitle = styled.h3`
   ${FONT_STYLE.GIANTS.H3_BOLD};
   font-size: ${({ theme }) => theme.FONT_SIZE.h5};
   line-height: ${({ theme }) => theme.FONT_LINE.h5};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.SEMIBOLD};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.MEDIUM};
   color: ${({ theme }) => theme.PALLETE.mainblack};
 
   @media (max-width: 768px) {
@@ -298,7 +303,7 @@ export const TrendTitle = styled.h3`
 export const TrendToggle = styled.div`
   display: inline-flex;
   background: ${({ theme }) => theme.PALLETE.gray[100]};
-  border-radius: ${({ theme }) => theme.RADIUS.full};
+  border-radius: ${({ theme }) => theme.RADIUS.md};
   padding: 4px;
   gap: 4px;
 `;
@@ -308,10 +313,10 @@ export const TrendToggleBtn = styled.button`
   height: 34px;
   padding: 0 14px;
   border: 0;
-  border-radius: ${({ theme }) => theme.RADIUS.full};
+  border-radius: ${({ theme }) => theme.RADIUS.md};
   cursor: pointer;
 
-  font-size: ${({ theme }) => theme.FONT_SIZE.h8};
+  font-size: ${({ theme }) => theme.FONT_SIZE.h7};
   line-height: ${({ theme }) => theme.FONT_LINE.h8};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.MEDIUM};
 
@@ -332,7 +337,7 @@ export const TrendToggleBtn = styled.button`
 
 export const TrendCard = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: ${({ theme }) => theme.RADIUS.lg};
+  border-radius: ${({ theme }) => theme.RADIUS.sm};
   background: ${({ theme }) => theme.PALLETE.white};
   padding: ${({ theme }) => theme.SPACING[6]};
 `;
@@ -392,16 +397,16 @@ export const TrendLegendItem = styled.div`
   display: inline-flex;
   align-items: center;
   gap: ${({ theme }) => theme.SPACING[2]};
-  font-size: ${({ theme }) => theme.FONT_SIZE.h8};
+  font-size: ${({ theme }) => theme.FONT_SIZE.h7};
   line-height: ${({ theme }) => theme.FONT_LINE.h8};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.MEDIUM};
-  color: rgba(0, 0, 0, 0.55);
+  color: ${({ theme }) => theme.PALLETE.mainblack};
 `;
 
 export const TrendLegendDot = styled.span`
-  width: 16px;
-  height: 16px;
-  border-radius: ${({ theme }) => theme.RADIUS.full};
+  width: 22px;
+  height: 22px;
+  border-radius: ${({ theme }) => theme.RADIUS.sm};
   background: ${({ $tone }) => ($tone === "used" ? "#7b61ff" : "#ff6b86")};
 `;
 
@@ -479,7 +484,7 @@ export const WeeklyTitle = styled.h3`
   ${FONT_STYLE.GIANTS.H3_BOLD};
   font-size: ${({ theme }) => theme.FONT_SIZE.h5};
   line-height: ${({ theme }) => theme.FONT_LINE.h5};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.SEMIBOLD};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.MEDIUM};
   color: ${({ theme }) => theme.PALLETE.mainblack};
 
   @media (max-width: 768px) {
@@ -490,9 +495,9 @@ export const WeeklyTitle = styled.h3`
 
 export const WeeklyCard = styled.div`
   width: 100%;
-  background: ${({ theme }) => theme.PALLETE.gray[70]};
+  background: ${({ theme }) => theme.PALLETE.gray[50]};
   border-radius: ${({ theme }) => theme.RADIUS.lg};
-  padding: ${({ theme }) => theme.SPACING[8]} ${({ theme }) => theme.SPACING[10]};
+  padding: ${({ theme }) => theme.SPACING[8]} ${({ theme }) => theme.SPACING[11]};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -508,24 +513,15 @@ export const WeeklyCard = styled.div`
 export const WeeklyLeft = styled.div`
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.SPACING[8]};
+  gap: ${({ theme }) => theme.SPACING[6]};
   flex: 1;
-
-  @media (max-width: 768px) {
-    gap: ${({ theme }) => theme.SPACING[5]};
-  }
 `;
 
 export const WeeklyTrophy = styled.img`
-  width: 86px;
-  height: 86px;
+  width: 160px;
+  height: 160px;
   object-fit: contain;
   flex: 0 0 auto;
-
-  @media (max-width: 768px) {
-    width: 72px;
-    height: 72px;
-  }
 `;
 
 export const WeeklyText = styled.div`
@@ -534,7 +530,7 @@ export const WeeklyText = styled.div`
 `;
 
 export const WeeklyWeek = styled.div`
-  font-size: ${({ theme }) => theme.FONT_SIZE.h8};
+  font-size: ${({ theme }) => theme.FONT_SIZE.h7};
   line-height: ${({ theme }) => theme.FONT_LINE.h8};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.BOLD};
   color: ${({ theme }) => theme.PALLETE.primary.main};
@@ -547,6 +543,12 @@ export const WeeklyMainTitle = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.BOLD};
   color: ${({ theme }) => theme.PALLETE.mainblack};
 `;
+
+export const WeeklyWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
 
 export const WeeklyDesc = styled.div`
   margin-top: ${({ theme }) => theme.SPACING[2]};
@@ -577,9 +579,9 @@ export const WeeklyProgressInfo = styled.div`
 `;
 
 export const WeeklyBarTrack = styled.div`
-  margin-top: ${({ theme }) => theme.SPACING[3]};
+  margin-top: ${({ theme }) => theme.SPACING[1]};
   width: 100%;
-  height: 14px;
+  height: 18px;
   border-radius: ${({ theme }) => theme.RADIUS.full};
   background: rgba(0, 0, 0, 0.10);
   overflow: hidden;
@@ -588,7 +590,7 @@ export const WeeklyBarTrack = styled.div`
 export const WeeklyBarFill = styled.div`
   height: 100%;
   border-radius: ${({ theme }) => theme.RADIUS.full};
-  background: #6a00ff;
+  background: linear-gradient(90deg, #8A2BE2 0%, #2A00FF 100%);
 
   /* 모션 */
   transition: width 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -600,7 +602,7 @@ export const WeeklyBarFill = styled.div`
 `;
 
 export const WeeklyBottomRow = styled.div`
-  margin-top: ${({ theme }) => theme.SPACING[3]};
+  margin-top: ${({ theme }) => theme.SPACING[1]};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -608,7 +610,7 @@ export const WeeklyBottomRow = styled.div`
 `;
 
 export const WeeklyBottomLeft = styled.div`
-  font-size: ${({ theme }) => theme.FONT_SIZE.h8};
+  font-size: ${({ theme }) => theme.FONT_SIZE.h7};
   line-height: ${({ theme }) => theme.FONT_LINE.h8};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.MEDIUM};
   color: rgba(0, 0, 0, 0.80);
@@ -640,7 +642,7 @@ export const WeeklyRewardBtn = styled.button`
   justify-content: center;
   gap: ${({ theme }) => theme.SPACING[3]};
 
-  font-size: ${({ theme }) => theme.FONT_SIZE.h8};
+  font-size: ${({ theme }) => theme.FONT_SIZE.h6};
   line-height: ${({ theme }) => theme.FONT_LINE.h8};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.BOLD};
   color: ${({ theme }) => theme.PALLETE.primary.main};
@@ -660,16 +662,12 @@ export const WeeklyRewardBtn = styled.button`
     outline: 2px solid ${({ theme }) => theme.PALLETE.primary.main};
     outline-offset: 2px;
   }
-
-  @media (max-width: 768px) {
-    width: 100%;
-    min-width: 0;
-  }
 `;
 
 export const WeeklyChevron = styled.span`
-  font-size: 22px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.h4};
   line-height: 1;
+  margin-top: -5px;
 `;
 
 
@@ -707,7 +705,7 @@ export const CookTitle = styled.h3`
   ${FONT_STYLE.GIANTS.H3_BOLD};
   font-size: ${({ theme }) => theme.FONT_SIZE.h5};
   line-height: ${({ theme }) => theme.FONT_LINE.h5};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.SEMIBOLD};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.MEDIUM};
   color: ${({ theme }) => theme.PALLETE.mainblack};
 
   @media (max-width: 768px) {
@@ -718,14 +716,14 @@ export const CookTitle = styled.h3`
 
 export const CookNav = styled.div`
   display: inline-flex;
-  gap: ${({ theme }) => theme.SPACING[3]};
+  gap: ${({ theme }) => theme.SPACING[2]};
 `;
 
 export const CookNavBtn = styled.button`
   width: 36px;
   height: 36px;
   border-radius: ${({ theme }) => theme.RADIUS.full};
-  border: 1px solid rgba(0, 0, 0, 0.14);
+  border: 1px solid ${({ theme }) => theme.PALLETE.primary.main};
   background: ${({ theme }) => theme.PALLETE.white};
   cursor: pointer;
 
@@ -735,17 +733,14 @@ export const CookNavBtn = styled.button`
 
   font-size: 18px;
   line-height: 1;
-  color: rgba(0, 0, 0, 0.7);
-
-  transition: transform 140ms ease, box-shadow 140ms ease;
+  color: ${({ theme }) => theme.PALLETE.primary.main};
 
   &:hover {
     transform: translateY(-1px);
-    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.10);
+    background-color: ${({ theme }) => theme.PALLETE.primary.main};
+    color: ${({ theme }) => theme.PALLETE.white};
   }
-  &:active {
-    transform: translateY(0px) scale(0.98);
-  }
+
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.PALLETE.primary.main};
     outline-offset: 2px;
@@ -777,11 +772,38 @@ export const CookThumb = styled.div`
   border-radius: ${({ theme }) => theme.RADIUS.lg};
   overflow: hidden;
   background: ${({ theme }) => theme.PALLETE.gray[100]};
+
+  /* 블러/딤(어둡게) 레이어 */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.25); /* 살짝 어둡게 */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    transition: opacity 180ms ease;
+    pointer-events: none;
+  }
+
+  /* hover 시 전체 블러 + 오버레이 표시 */
+  @media (hover: hover) and (pointer: fine) {
+    &:hover::after {
+      opacity: 1;
+    }
+
+    &:hover .cook-like {
+      opacity: 1;
+      transform: translate(-50%, -50%) translateY(0px) scale(1);
+    }
+  }
 `;
+
 
 export const CookImg = styled.img`
   width: 100%;
-  height: 130px;
+  height: 190px;
   object-fit: cover;
   display: block;
 
@@ -794,6 +816,8 @@ export const CookLikeOverlay = styled.div`
   position: absolute;
   left: 50%;
   top: 50%;
+  z-index: 3; /* 블러 레이어(::after)보다 위로 */
+
   transform: translate(-50%, -50%) translateY(6px) scale(0.98);
   opacity: 0;
 
@@ -808,26 +832,28 @@ export const CookLikeOverlay = styled.div`
 
   padding: 8px 14px;
   border-radius: ${({ theme }) => theme.RADIUS.full};
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(2px);
+  /* background: rgba(0, 0, 0, 0.35); */
+  /* backdrop-filter: blur(2px); */
+  /* -webkit-backdrop-filter: blur(2px); */
 
   transition: opacity 180ms ease, transform 180ms ease;
-
 `;
 
+
 export const CookHeart = styled.span`
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.h7};
   line-height: 1;
+  color: #ff3b30;
 `;
 
 export const CookLikeCount = styled.span`
-  font-size: ${({ theme }) => theme.FONT_SIZE.h8};
+  font-size: ${({ theme }) => theme.FONT_SIZE.h7};
   line-height: ${({ theme }) => theme.FONT_LINE.h8};
 `;
 
 export const CookName = styled.div`
   margin-top: ${({ theme }) => theme.SPACING[3]};
-  font-size: ${({ theme }) => theme.FONT_SIZE.h8};
+  font-size: ${({ theme }) => theme.FONT_SIZE.h7};
   line-height: ${({ theme }) => theme.FONT_LINE.h8};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.SEMIBOLD};
   color: ${({ theme }) => theme.PALLETE.mainblack};

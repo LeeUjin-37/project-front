@@ -51,13 +51,36 @@ const MaterialUsageTrend = ({
   }, [mode, weeklyData, monthlyData, labels]);
 
   const chartMeta = useMemo(() => {
+    // 주간: 시안 고정
+    if (mode === "week") {
+      return { max: 4.5, steps: 9, tick: 0.5 };
+    }
+
+    // 월간: 데이터 기반 자동 + 예쁜 눈금
     const values = data.flatMap((d) => [d.used, d.waste]);
     const maxVal = Math.max(...values, 1);
-    const paddedMax = Math.ceil(maxVal * 1.12 * 10) / 10; // 10단위 소수 한 자리
-    const steps = 6; // 그리드 라인 개수
-    const tick = paddedMax / steps;
-    return { max: paddedMax, steps, tick };
-  }, [data]);
+
+    // max는 0.5 단위 올림
+    const max = Math.ceil(maxVal / 0.5) * 0.5;
+
+    // tick을 "예쁜 단위"로 선택 (0.5 / 1 / 2)
+    const targetTicks = 6; // 대충 6칸 정도 보이게
+    const rawTick = max / targetTicks;
+
+    let tick = 0.5;
+    if (rawTick > 0.5) tick = 1;
+    if (rawTick > 1) tick = 2;
+
+    const steps = Math.ceil(max / tick); // 0 포함 라인까지: steps+1
+
+    return { max, steps, tick };
+  }, [mode, data]);
+
+
+  const formatTick = (v) => {
+    if (Math.abs(v) < 1e-6) return "0";
+    return mode === "week" ? v.toFixed(1) : String(Math.round(v));
+  };
 
   // SVG 레이아웃
   const W = 980;
@@ -161,7 +184,7 @@ const MaterialUsageTrend = ({
                       fontSize="12"
                       fill="rgba(0,0,0,0.35)"
                     >
-                      {i === 0 ? "0" : v.toFixed(v < 1 ? 1 : 0)}
+                      {formatTick(v)}
                     </text>
                   </g>
                 );

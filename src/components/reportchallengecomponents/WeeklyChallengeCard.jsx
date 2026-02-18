@@ -88,6 +88,7 @@ const WeeklyChallengeCard = ({
             <S.WeeklyText>
               <S.WeeklyWeek>{weekLabel}</S.WeeklyWeek>
               <S.WeeklyMainTitle>{title}</S.WeeklyMainTitle>
+              <S.WeeklyWrap>
               <S.WeeklyDesc>{desc}</S.WeeklyDesc>
 
               <S.WeeklyProgressRow>
@@ -95,6 +96,7 @@ const WeeklyChallengeCard = ({
                   앞으로 <b>{leftCount}</b>개 가 남았어요!
                 </S.WeeklyProgressInfo>
               </S.WeeklyProgressRow>
+              </S.WeeklyWrap>
 
               <S.WeeklyBarTrack>
                 <S.WeeklyBarFill

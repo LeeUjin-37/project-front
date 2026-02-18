@@ -5,22 +5,22 @@ import PostCard from "./PostCard";
 
 const PAGE_SIZE = 12;
 
-const FeedGrid = ({ onCardClick, meNickname }) => {
-  const allItems = useMemo(
-    () =>
-      Array.from({ length: 60 }, (_, i) => ({
-        id: i + 1,
-        recipeName: `레시피 ${i + 1}`,
-      })),
-    []
-  );
+const FeedGrid = ({ items = [], onCardClick, meNickname }) => {
+  // const allItems = useMemo(
+  //   () =>
+  //     Array.from({ length: 60 }, (_, i) => ({
+  //       id: i + 1,
+  //       recipeName: `레시피 ${i + 1}`,
+  //     })),
+  //   []
+  // );
 
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [isLoading, setIsLoading] = useState(false);
   const sentinelRef = useRef(null);
 
-  const hasMore = visibleCount < allItems.length;
-  const visibleItems = allItems.slice(0, visibleCount);
+  const hasMore = visibleCount < items.length;
+  const visibleItems = items.slice(0, visibleCount);
 
   const loadMore = useCallback(() => {
     if (isLoading) return;
@@ -28,10 +28,10 @@ const FeedGrid = ({ onCardClick, meNickname }) => {
 
     setIsLoading(true);
     setTimeout(() => {
-      setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, allItems.length));
+      setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, items.length));
       setIsLoading(false);
     }, 350);
-  }, [isLoading, hasMore, allItems.length]);
+  }, [isLoading, hasMore, items.length]);
 
   useEffect(() => {
     const el = sentinelRef.current;

@@ -1,31 +1,5 @@
 import React from "react";
-import {
-  LiveReviewWrapper,
-  LiveReviewInner,
-  LiveReviewHeader,
-
-  LiveReviewTitleBox,
-  LiveReviewSubTitle,
-  LiveReviewTitle,
-  LiveReviewMoreButton,
-
-  LiveReviewSwiper,
-  LiveReviewCard,
-  LiveReviewCardTop,
-  LiveReviewMetaLeft,
-  LiveReviewAvatar,
-
-  LiveReviewRecipeTitle,
-  LiveReviewBadgeRow,
-  LiveReviewBadge,
-
-  LiveReviewArrowBtn,
-  LiveReviewDivider,
-  LiveReviewUserName,
-  LiveReviewContent,
-  LiveReviewImageRow,
-  LiveReviewThumb,
-} from "../../pages/main/style";
+import * as S from "../../pages/main/style";
 
 import { SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -39,37 +13,36 @@ const MainLiveReviewSection = ({
   reviews = [],
 }) => {
   return (
-    <LiveReviewWrapper>
-      <LiveReviewInner>
-        <LiveReviewHeader>
-          <LiveReviewTitleBox>
-            <LiveReviewSubTitle>{subtitle}</LiveReviewSubTitle>
-            <LiveReviewTitle>{title}</LiveReviewTitle>
-          </LiveReviewTitleBox>
+    <S.LiveReviewWrapper>
+      <S.LiveReviewInner>
+        <S.LiveReviewHeader>
+          <S.LiveReviewTitleBox>
+            <S.LiveReviewSubTitle>{subtitle}</S.LiveReviewSubTitle>
+            <S.LiveReviewTitle>{title}</S.LiveReviewTitle>
+          </S.LiveReviewTitleBox>
 
-          <LiveReviewMoreButton type="button" onClick={onMoreClick}>
+          <S.LiveReviewMoreButton type="button" onClick={onMoreClick}>
             더 보기 <span aria-hidden="true">›</span>
-          </LiveReviewMoreButton>
-        </LiveReviewHeader>
+          </S.LiveReviewMoreButton>
+        </S.LiveReviewHeader>
 
-        <LiveReviewSwiper
+        <S.LiveReviewSwiper
           slidesPerView={4}
           spaceBetween={24}
-          loop={reviews.length > 4}           // 4개 초과일 때만 loop
+          loop={reviews.length > 4} // 4개 초과일 때만 loop
           modules={[Autoplay]}
           autoplay={{
-            delay: 3000,               // 3초마다 이동
-            disableOnInteraction: false // 드래그 후에도 계속 자동재생
+            delay: 3000,
+            disableOnInteraction: false,
           }}
-          allowTouchMove                      // 터치/드래그 허용
-          simulateTouch                       // PC에서도 드래그 가능
-          grabCursor                          // 마우스 커서 손모양
-          touchStartPreventDefault={false}    // 클릭요소 있어도 드래그 되게
-          nested={true}                       // 안쪽 컴포넌트 이벤트 충돌 방지
-          observer={true}                     // 렌더 후 레이아웃 변해도 감지
-          observeParents={true}               // 부모 변화 감지
+          allowTouchMove
+          simulateTouch
+          grabCursor
+          touchStartPreventDefault={false}
+          nested
+          observer
+          observeParents
           onSwiper={(swiper) => console.log("swiper mounted", swiper)}
-
         >
           {reviews.map((r) => {
             const imgs = Array.isArray(r.images) ? r.images.slice(0, 3) : [];
@@ -77,7 +50,7 @@ const MainLiveReviewSection = ({
 
             return (
               <SwiperSlide key={r.id}>
-                <LiveReviewCard
+                <S.LiveReviewCard
                   className={imgs.length > 0 ? "has-images" : "no-images"}
                   role="button"
                   tabIndex={0}
@@ -86,63 +59,68 @@ const MainLiveReviewSection = ({
                     if (e.key === "Enter") onCardClick?.(r);
                   }}
                 >
-                  <LiveReviewCardTop>
-                    <LiveReviewMetaLeft>
-                      <LiveReviewAvatar>
+                  <S.LiveReviewCardTop>
+                    <S.LiveReviewMetaLeft>
+                      <S.LiveReviewAvatar>
                         <img
-                          src={r.avatarUrl || "../../assets/images/main/user_profile01.png"}
+                          src={
+                            r.avatarUrl ||
+                            "../../assets/images/main/user_profile01.png"
+                          }
                           alt={`${r.userName} 프로필`}
                           onError={(e) => {
-                            // onError 한 번만 실행되게 막기
                             e.currentTarget.onerror = null;
-                            e.currentTarget.src = "../../assets/images/main/user_profile01.png";
+                            e.currentTarget.src =
+                              "../../assets/images/main/user_profile01.png";
                           }}
                         />
-                      </LiveReviewAvatar>
-                      <div style={{ minWidth: 0 }}>
-                        <LiveReviewRecipeTitle title={r.recipeTitle}>
+                      </S.LiveReviewAvatar>
+
+                      <S.MinWidth0>
+                        <S.LiveReviewRecipeTitle title={r.recipeTitle}>
                           {r.recipeTitle}
-                        </LiveReviewRecipeTitle>
-                      </div>
-                    </LiveReviewMetaLeft>
+                        </S.LiveReviewRecipeTitle>
+                      </S.MinWidth0>
+                    </S.LiveReviewMetaLeft>
 
-                    <LiveReviewArrowBtn type="button" aria-label="리뷰 상세로 이동">
-                      
-                    </LiveReviewArrowBtn>
-                  </LiveReviewCardTop>
+                    <S.LiveReviewArrowBtn
+                      type="button"
+                      aria-label="리뷰 상세로 이동"
+                    />
+                  </S.LiveReviewCardTop>
 
-                  <LiveReviewDivider />
+                  <S.LiveReviewDivider />
 
-                  <LiveReviewMetaLeft>
-                    <LiveReviewUserName>{r.userName}</LiveReviewUserName>
-                    <LiveReviewBadgeRow>
-                      <LiveReviewBadge className="star">
+                  <S.LiveReviewMetaLeft>
+                    <S.LiveReviewUserName>{r.userName}</S.LiveReviewUserName>
+                    <S.LiveReviewBadgeRow>
+                      <S.LiveReviewBadge className="star">
                         <i aria-hidden="true">★</i> Lv.{r.level}
-                      </LiveReviewBadge>
-                      <LiveReviewBadge className="xp">XP {r.xp}</LiveReviewBadge>
-                    </LiveReviewBadgeRow>
-                  </LiveReviewMetaLeft>
+                      </S.LiveReviewBadge>
+                      <S.LiveReviewBadge className="xp">
+                        XP {r.xp}
+                      </S.LiveReviewBadge>
+                    </S.LiveReviewBadgeRow>
+                  </S.LiveReviewMetaLeft>
 
-                  <LiveReviewContent>{r.content}</LiveReviewContent>
+                  <S.LiveReviewContent>{r.content}</S.LiveReviewContent>
 
                   {imgs.length > 0 && (
-                    <LiveReviewImageRow className={countClass}>
+                    <S.LiveReviewImageRow className={countClass}>
                       {imgs.map((src, idx) => (
-                        <LiveReviewThumb key={`${r.id}-${idx}`}>
+                        <S.LiveReviewThumb key={`${r.id}-${idx}`}>
                           <img src={src} alt="" loading="lazy" />
-                        </LiveReviewThumb>
+                        </S.LiveReviewThumb>
                       ))}
-                    </LiveReviewImageRow>
+                    </S.LiveReviewImageRow>
                   )}
-                </LiveReviewCard>
+                </S.LiveReviewCard>
               </SwiperSlide>
             );
           })}
-        </LiveReviewSwiper>
-
-
-      </LiveReviewInner>
-    </LiveReviewWrapper>
+        </S.LiveReviewSwiper>
+      </S.LiveReviewInner>
+    </S.LiveReviewWrapper>
   );
 };
 

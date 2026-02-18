@@ -4,20 +4,7 @@ import { Autoplay, A11y } from "swiper/modules";
 
 import "swiper/css";
 
-import {
-  HeroWrapper,
-  HeroSlide,
-  HeroBlurBg,
-  HeroImage,
-  HeroContent,
-  HeroTitle,
-  HeroDesc,
-  HeroButton,
-  HeroControlBar,
-  ControlBtn,
-  ControlCount,
-  HeroArrowButton,
-} from "../../pages/main/style";
+import * as S from "../../pages/main/style";
 
 const TOTAL_SLIDES = 3;
 
@@ -30,7 +17,7 @@ const slides = [
       "그 재료로 바로 만들 수 있는 요리를 추천해주고\n" +
       "요리를 완성하면 레벨업되는 요리 게임 플랫폼입니다.",
     cta: "내 냉장고를 채워볼까요?",
-    bg: `${process.env.PUBLIC_URL}/assets/images/main/visual01.jpg`, // 슬라이드별 bg
+    bg: `${process.env.PUBLIC_URL}/assets/images/main/visual01.jpg`,
   },
   {
     id: 2,
@@ -78,19 +65,19 @@ const MainHero = () => {
   const handlePrev = () => {
     const swiper = swiperRef.current;
     if (!swiper) return;
-    swiper.slidePrev(); // 이전 슬라이드로
+    swiper.slidePrev();
   };
 
   const handleNext = () => {
     const swiper = swiperRef.current;
     if (!swiper) return;
-    swiper.slideNext(); // 다음 슬라이드로
+    swiper.slideNext();
   };
 
   return (
-    <HeroWrapper>
-      {/* 이전 버튼: 현재 → 이전 */}
-      <HeroArrowButton
+    <S.HeroWrapper>
+      {/* 이전 버튼 */}
+      <S.HeroArrowButton
         ref={prevRef}
         className="left"
         aria-label="이전 슬라이드"
@@ -102,10 +89,10 @@ const MainHero = () => {
           alt=""
           aria-hidden="true"
         />
-      </HeroArrowButton>
+      </S.HeroArrowButton>
 
-      {/* 다음 버튼: 현재 → 다음 */}
-      <HeroArrowButton
+      {/* 다음 버튼 */}
+      <S.HeroArrowButton
         ref={nextRef}
         className="right"
         aria-label="다음 슬라이드"
@@ -117,30 +104,35 @@ const MainHero = () => {
           alt=""
           aria-hidden="true"
         />
-      </HeroArrowButton>
+      </S.HeroArrowButton>
 
       {/* 하단 컨트롤바 */}
-      <HeroControlBar>
-        <ControlBtn
+      <S.HeroControlBar>
+        <S.ControlBtn
           type="button"
           className={`pause ${isPaused ? "is-play" : ""}`}
           aria-label={isPaused ? "자동 재생" : "자동 정지"}
           onClick={handleToggleAutoplay}
         />
-        <ControlCount>
+        <S.ControlCount>
           {current} / {TOTAL_SLIDES}
-        </ControlCount>
+        </S.ControlCount>
 
-        <ControlBtn type="button" className="next" aria-label="다음 슬라이드" onClick={handleNext}>
+        <S.ControlBtn
+          type="button"
+          className="next"
+          aria-label="다음 슬라이드"
+          onClick={handleNext}
+        >
           ›
-        </ControlBtn>
-      </HeroControlBar>
+        </S.ControlBtn>
+      </S.HeroControlBar>
 
       <Swiper
         modules={[Autoplay, A11y]}
         slidesPerView={1}
         speed={650}
-        loop // 무한 루프
+        loop
         autoplay={{
           delay: 4500,
           disableOnInteraction: false,
@@ -155,39 +147,38 @@ const MainHero = () => {
       >
         {slides.map((s) => (
           <SwiperSlide key={s.id}>
-            {/* HeroSlide에 bg를 props로 전달 */}
-            <HeroSlide>
-              <HeroBlurBg $bg={s.bg} />
-              <HeroImage $bg={s.bg} />
-              <HeroContent>
-                <HeroTitle>
+            <S.HeroSlide>
+              <S.HeroBlurBg $bg={s.bg} />
+              <S.HeroImage $bg={s.bg} />
+              <S.HeroContent>
+                <S.HeroTitle>
                   {s.title.split("\n").map((line, i) => (
                     <React.Fragment key={i}>
                       {line}
                       <br />
                     </React.Fragment>
                   ))}
-                </HeroTitle>
+                </S.HeroTitle>
 
-                <HeroDesc>
+                <S.HeroDesc>
                   {s.desc.split("\n").map((line, i) => (
                     <React.Fragment key={i}>
                       {line}
                       <br />
                     </React.Fragment>
                   ))}
-                </HeroDesc>
+                </S.HeroDesc>
 
-                <HeroButton>
+                <S.HeroButton>
                   {s.cta}
                   <span aria-hidden="true">›</span>
-                </HeroButton>
-              </HeroContent>
-            </HeroSlide>
+                </S.HeroButton>
+              </S.HeroContent>
+            </S.HeroSlide>
           </SwiperSlide>
         ))}
       </Swiper>
-    </HeroWrapper>
+    </S.HeroWrapper>
   );
 };
 

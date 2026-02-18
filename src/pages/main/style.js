@@ -48,7 +48,7 @@ export const HeroBlurBg = styled.div`
   inset: 0;
   z-index: 0;
 
-  background-image: url(${({ $bg }) => $bg});
+  background-image: ${({ $bg }) => ($bg ? `url(${$bg})` : "none")};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -62,7 +62,7 @@ export const HeroImage = styled.div`
   position: absolute;
   inset: 0;
   z-index: 1;
-  background-image: url(${({ $bg }) => $bg});
+  background-image: ${({ $bg }) => ($bg ? `url(${$bg})` : "none")};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -191,12 +191,6 @@ export const ControlBtn = styled.button`
 
   &.pause.is-play {
     /* play 삼각형 */
-  }
-  &.pause.is-play::marker {
-    content: "";
-  }
-  &.pause.is-play {
-    /* pseudo로 play 만들기 */
   }
   &.pause.is-play::after {
     display: block;
@@ -342,7 +336,6 @@ export const StepTextArea = styled.div`
 
 /* ===== MainRecipe Section ===== */
 export const RecipePanel = styled.div`
-  /* 나중에 스타일 추가 */
 `;
 
 export const RecipeSectionGroup = styled.div`
@@ -499,7 +492,7 @@ export const MetaChip = styled.span`
 export const LiveReviewWrapper = styled.section`
   width: 100%;
   background: ${({ theme }) => theme.PALLETE.gray[50]};
-  padding: 70px 0 20px
+  padding: 70px 0 20px;
 `;
 
 export const LiveReviewInner = styled.div`
@@ -647,7 +640,7 @@ export const LiveReviewArrowBtn = styled.button`
   border-radius: 50%;
   background: white;
   cursor: pointer;
-
+  border: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -698,4 +691,8 @@ export const LiveReviewThumb = styled.div`
   overflow: hidden;
   border-radius: 12px;
   background: ${({ theme }) => theme.PALLETE.gray[50]};
+`;
+
+export const MinWidth0 = styled.div`
+  min-width: 0;
 `;

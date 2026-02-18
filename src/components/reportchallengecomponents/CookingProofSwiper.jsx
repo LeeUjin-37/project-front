@@ -1,89 +1,94 @@
 import React, { useId } from "react";
+import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
 import * as S from "../../pages/reportandchallenge/style";
+
+const BASE_IMG_URL = process.env.PUBLIC_URL + "/assets/images/main";
 
 const CookingProofSwiper = ({
   title = "나의 요리 인증",
   items = [
     {
       id: 1,
-      image:
-        "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200&q=80",
-      name: "초간단 소고기 토마토 스튜...",
+      image: `${BASE_IMG_URL}/r_tab3_slide01.jpg`,
+      name: "초간단한 한우 달달 토마토 스튜",
       rating: 4.8,
-      xp: 350,
+      xp: 360,
       likes: 80,
     },
     {
       id: 2,
-      image:
-        "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=1200&q=80",
+      image: `${BASE_IMG_URL}/r_tab3_slide02.jpg`,
       name: "스윗 달콤한 콘앤치즈",
-      rating: 4.8,
-      xp: 350,
+      rating: 4.9,
+      xp: 430,
       likes: 80,
     },
     {
       id: 3,
-      image:
-        "https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642?w=1200&q=80",
+      image: `${BASE_IMG_URL}/r_tab3_slide03.jpg`,
       name: "꾸덕한 버섯 크림 리조또",
-      rating: 4.8,
-      xp: 350,
+      rating: 4.6,
+      xp: 240,
       likes: 80,
     },
     {
       id: 4,
-      image:
-        "https://images.unsplash.com/photo-1604909053191-6f0f6f2a77ce?w=1200&q=80",
+      image: `${BASE_IMG_URL}/r_tab3_slide04.jpg`,
       name: "매콤 쫀득한 치즈 떡볶이",
-      rating: 4.8,
-      xp: 350,
+      rating: 4.6,
+      xp: 240,
       likes: 80,
     },
     {
       id: 5,
-      image:
-        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=1200&q=80",
-      name: "따뜻하게 먹는 에그인헬...",
-      rating: 4.8,
-      xp: 350,
+      image: `${BASE_IMG_URL}/r_tab3_slide05.jpg`,
+      name: "따뜻하게 먹는 치즈 에그인헬",
+      rating: 4.6,
+      xp: 240,
       likes: 80,
     },
     {
       id: 6,
-      image:
-        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=1200&q=80",
-      name: "따뜻하게 먹는 에그인헬...",
+      image: `${BASE_IMG_URL}/r_tab3_slide01.jpg`,
+      name: "토마토 스튜",
       rating: 4.8,
-      xp: 350,
+      xp: 360,
       likes: 80,
     },
     {
       id: 7,
-      image:
-        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=1200&q=80",
-      name: "따뜻하게 먹는 에그인헬...",
-      rating: 4.8,
-      xp: 350,
+      image: `${BASE_IMG_URL}/r_tab3_slide02.jpg`,
+      name: "콘앤치즈",
+      rating: 4.9,
+      xp: 430,
       likes: 80,
     },
     {
       id: 8,
-      image:
-        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=1200&q=80",
-      name: "따뜻하게 먹는 에그인헬...",
-      rating: 4.8,
-      xp: 350,
+      image: `${BASE_IMG_URL}/r_tab3_slide03.jpg`,
+      name: "크림 리조또",
+      rating: 4.6,
+      xp: 240,
       likes: 80,
     },
   ],
-  onClickItem = () => {},
+  onClickItem, // 외부에서 받으면 사용
 }) => {
+  const navigate = useNavigate(); // 여기서 정의해야 함
+
+  // onClickItem 없으면 기본 이동 로직 사용
+  const handleClickItem = (item) => {
+    const url = `/communitymain?postId=${item.id}`;
+
+    // 새창으로 열기
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   const uid = useId().replaceAll(":", "");
   const prevCls = `cook-prev-${uid}`;
   const nextCls = `cook-next-${uid}`;
@@ -106,11 +111,18 @@ const CookingProofSwiper = ({
 
         <S.CookSwiperWrap>
           <Swiper
-            modules={[Navigation]}
+            modules={[Navigation, Autoplay]}
             navigation={{
               prevEl: `.${prevCls}`,
               nextEl: `.${nextCls}`,
             }}
+            loop={true}
+            autoplay={{
+              delay: 3000, // 3초
+              disableOnInteraction: false, // 드래그 후에도 계속 자동재생
+              pauseOnMouseEnter: true, // hover 시 잠깐 멈춤
+            }}
+            speed={600} // 슬라이드 이동 속도
             spaceBetween={20}
             slidesPerView={5}
             breakpoints={{
@@ -123,11 +135,10 @@ const CookingProofSwiper = ({
           >
             {items.map((it) => (
               <SwiperSlide key={it.id} className="cook-slide">
-                <S.CookCardBtn type="button" onClick={() => onClickItem(it)}>
+                <S.CookCardBtn type="button" onClick={() => handleClickItem(it)}>
                   <S.CookThumb>
                     <S.CookImg src={it.image} alt={it.name} />
 
-                    {/* hover overlay */}
                     <S.CookLikeOverlay className="cook-like">
                       <S.CookHeart aria-hidden="true">❤</S.CookHeart>
                       <S.CookLikeCount>{it.likes}</S.CookLikeCount>

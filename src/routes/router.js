@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate, useLocation } from "react-router-dom";
 import MyTestLayout from "../pages/templates/mytestlayout/MyTestLayout";
 import MyTestMainContainer from "../pages/templates/mytestmain/MyTestMainContainer";
 import MyTestContextContainer from "../pages/templates/mytestcontext/MyTestContextContainer";
@@ -22,6 +22,11 @@ import JoinPage from "../pages/loginandjoin/JoinPage";
 import NotFound from "../pages/notfound/NotFound";
 import MyPosts from "../pages/mypost/MyPosts";
 import MyRecipe from "../pages/myrecipe/MyRecipe";
+
+const CommunityRedirect = () => {
+  const location = useLocation();
+  return <Navigate to={`/communitymain${location.search}`} replace />;
+};
 
 const router = createBrowserRouter([
   {
@@ -76,6 +81,11 @@ const router = createBrowserRouter([
             element: <PostPopUp />,
           },
         ],
+      },
+      {
+        path: "/community",
+        // element: <Navigate to="/communitymain" replace />,
+        element: <CommunityRedirect />,
       },
       {
         path: "/levelandbadge",

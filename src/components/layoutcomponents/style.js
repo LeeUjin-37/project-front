@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { flexCenter, FONT_STYLE } from "../../styles/common";
-import theme from "../../styles/theme";
 
 // 플로팅 액션 섹션
 export const FloatingWrapper = styled.div`
@@ -15,23 +14,20 @@ export const ScrollButton = styled.button`
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  border: none;
+  border: 1px solid  ${({ theme }) => theme.PALLETE.gray[300]};
 
-  background-color: ${({ theme }) => theme.PALLETE.primary.main};
+  background-color: ${({ theme }) => theme.PALLETE.white};
 
-  color: #fff;
+  color: ${({ theme }) => theme.PALLETE.mainblack};
 
   font-size: 20px;
   font-weight: 700;
 
   cursor: pointer;
-
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   transition: all 0.25s ease;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -417,7 +413,7 @@ export const ProfileImgWrap = styled.div`
 export const ProfileTitles = styled.p`
   ${FONT_STYLE.PRETENDARD.H6_BOLD};
   margin: 10px 0 10px 0;
-  color: ${theme.PALLETE.headerandfooter};
+  color: ${({ theme }) => theme.PALLETE.headerandfooter};
 `;
 
 export const ProfileUserInfoContainer = styled.div`
@@ -434,7 +430,7 @@ export const ProfileUserLevel = styled.div`
   height: 28px;
   ${flexCenter};
   ${FONT_STYLE.PRETENDARD.H7_MEDIUM};
-  color: ${theme.PALLETE.primary.main};
+  color: ${({ theme }) => theme.PALLETE.primary.main};
   background: #fff2e8;
   border-radius: 5px;
   gap: 10px;
@@ -445,7 +441,7 @@ export const ProfileUserXp = styled.div`
   height: 28px;
   ${flexCenter};
   ${FONT_STYLE.PRETENDARD.H7_MEDIUM};
-  color: ${theme.PALLETE.secondary};
+  color: ${({ theme }) => theme.PALLETE.secondary};
   border-radius: 5px;
   background: #dff7f1;
 `;
@@ -456,7 +452,7 @@ export const ProfileUserCreateAt = styled.p`
 
 export const ProfileContainer = styled.div`
   padding: 20px 0 20px 0;
-  border-bottom: 1px solid ${theme.PALLETE.gray[300]};
+  border-bottom: 1px solid ${({ theme }) => theme.PALLETE.gray[300]};
   display:flex;
   flex-direction:column;
   gap: 5px;

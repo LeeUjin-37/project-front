@@ -12,6 +12,7 @@ import {
   RECIPE_DATA_DIET,
   RECIPE_DATA_SIDE,
 } from "../../components/maincomponents/recipeData";
+import FloatingActions from "../../components/layoutcomponents/FloatingActions";
 
 const MainContainer = () => {
   return (
@@ -27,6 +28,7 @@ const MainContainer = () => {
         reviews={LIVE_REVIEW_DATA}
         onMoreClick={() => console.log("더 보기 클릭")}
       />
+      <FloatingActions targetId="community-top" />
     </>
   );
 };
