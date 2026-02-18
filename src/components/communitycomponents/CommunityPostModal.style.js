@@ -1,7 +1,6 @@
 // CommunityPostModal.style.js
 import styled from "styled-components";
-import { FONT_STYLE } from "../../styles/common";
-import { flexBetweenRow } from "../../styles/common";
+import { flexCenter, flexBetweenRow,FONT_STYLE } from "../../styles/common";
 
 /* ---------- modal ---------- */
 
@@ -11,9 +10,7 @@ export const Backdrop = styled.div`
   z-index: 9999;
 
   background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
 
   padding: 28px;
 `;
@@ -33,12 +30,64 @@ export const Hero = styled.div`
   position: relative;
   height: 330px;
   overflow: hidden;
+  background: #000;
 `;
 
 export const ImageWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+`;
+
+/* ✅ 배경 이미지: cover + blur */
+export const HeroBg = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  transform: scale(1.06); /* blur 테두리 비는 거 방지 */
+  opacity: 0.5;
+`;
+
+/* ✅ 배경 딤(어둡게 + 대비) */
+export const HeroBgDim = styled.div`
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+`;
+
+/* ✅ 중앙 메인 이미지 컨테이너 */
+export const HeroMain = styled.div`
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px 72px; /* 좌/우 버튼 공간 확보 */
+`;
+
+/* ✅ 중앙 메인 이미지 */
+export const HeroMainImg = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+
+  border-radius: 12px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+`;
+
+export const HeroPlaceholder = styled.div`
+  width: 100%;
+  height: 100%;
+  ${flexCenter}
+
+  ${FONT_STYLE.PRETENDARD.H6_REGULAR};
+  color: ${({ theme }) => theme.PALLETE.gray[700]};
 `;
 
 export const HeroImage = styled.img`
@@ -48,22 +97,12 @@ export const HeroImage = styled.img`
   display: block;
 `;
 
-export const HeroPlaceholder = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  ${FONT_STYLE.PRETENDARD.H6_REGULAR};
-  color: ${({ theme }) => theme.PALLETE.gray[700]};
-`;
 
 export const CloseButton = styled.button`
   position: absolute;
   top: 16px;
   right: 16px;
-  z-index: 7;
+  z-index: 10;
 
   width: 40px;
   height: 40px;
@@ -88,10 +127,12 @@ export const CloseIcon = styled.img`
 export const NavControls = styled.div`
   position: absolute;
   inset: 0;
-  z-index: 6;
+  z-index: 9;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   padding: 0 22px;
   pointer-events: auto;
 `;
@@ -361,7 +402,8 @@ export const SectionDivider = styled.div`
 `;
 
 export const CommentScrollArea = styled.div`
-  height: 170px;
+  /* height: 170px; */
+  height: 188px;
   overflow: auto;
 
   display: flex;
@@ -415,11 +457,13 @@ export const EditActionRow = styled.div`
   margin-top: 6px;
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 6px;
 `;
 
 export const EditActionButton = styled.button`
-  border: none;
+  border: 1px solid ${({ theme }) => theme.PALLETE.gray[300]};
+  border-radius: 5px;
+  /* border-radius: 5px; */
   background: transparent;
   cursor: pointer;
 
@@ -539,7 +583,7 @@ export const MenuBox = styled.div`
   background: ${({ theme }) => theme.PALLETE.white};
   border: 1px solid ${({ theme }) => theme.PALLETE.gray[200]};
   border-radius: 10px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.0);
 
   padding: 6px;
 
@@ -564,15 +608,19 @@ export const MenuItem = styled.button`
 
   ${FONT_STYLE.PRETENDARD.H8_REGULAR};
 
-  color: ${({ theme, $danger, $primary }) => {
-    if ($danger) return theme.PALLETE.primary.mainblack;
-    if ($primary) return theme.PALLETE.primary.mainblack; /* ✅ 수정은 primary */
-    return theme.PALLETE.mainblack;
-  }};
+  color: ${({ theme }) => theme.PALLETE.mainblack};
 
   &:hover {
-    background: ${({ theme }) => theme.PALLETE.gray[100]};
+    color: ${({ theme }) => theme.PALLETE.primary.main};
   }
+
+   ${({ $danger, theme }) =>
+    $danger &&
+    `
+      &:hover {
+        color: ${theme.PALLETE.error};
+      }
+    `}
 `;
 
 /* 아이콘도 같이 색 바꾸려면: svg를 img로 쓰면 색 변경이 안 돼서
@@ -585,21 +633,22 @@ export const MenuIcon = styled.img`
   height: 16px;
   display: block;
 `;
+
 export const CommentComposer = styled.div`
-  margin-top: 12px;
+  margin-top: 18px;
   display: grid;
-  grid-template-columns: 1fr 44px;
-  gap: 10px;
+  grid-template-columns: 1fr 51px;
+  gap: 6px;
   align-items: center;
 `;
 
 export const Textarea = styled.textarea`
-  height: 56px;
+  height: 50px;
   resize: none;
 
   border: 1px solid ${({ theme }) => theme.PALLETE.gray[300]};
   border-radius: 5px;
-  padding: 12px;
+  padding: 15px;
 
   ${FONT_STYLE.PRETENDARD.H8_REGULAR};
   color: ${({ theme }) => theme.PALLETE.mainblack};
@@ -616,8 +665,8 @@ export const Textarea = styled.textarea`
 `;
 
 export const SendButton = styled.button`
-  width: 44px;
-  height: 44px;
+  width: 50px;
+  height: 50px;
   border-radius: 5px;
 
   border: none;
@@ -642,7 +691,8 @@ export const SendIcon = styled.img`
 `;
 
 export const CounterRow = styled.div`
-  margin-top: 6px;
+  margin-top: 4px;
+  margin-right: 6px;
   display: flex;
   justify-content: end;
   align-items: center;
@@ -655,7 +705,8 @@ export const CounterText = styled.div`
 
 /* ✅ 취소/저장 버튼 영역 */
 export const ActionRow = styled.div`
-  margin-top: 10px;
+  /* margin-top: 10px; */
+  margin-bottom: 10px;
   display: flex;
   justify-content: center;
   gap: 12px;

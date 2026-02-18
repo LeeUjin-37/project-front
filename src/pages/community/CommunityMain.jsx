@@ -157,6 +157,17 @@ const CommunityMain = () => {
     },
     [selectedPost]
   );
+    // 트렌딩 카드 클릭 → 모달 오픈
+   const handleTrendingCardClick = useCallback(
+    (item) => {
+      const post = buildMockPost({
+        id: item.id,
+        recipeName: item.recipeName ?? `레시피 ${item.id}`,
+      });
+      handleOpenPostModal(post);
+    },
+    [handleOpenPostModal]
+  );
 
   return (
     <S.Page>
@@ -176,7 +187,7 @@ const CommunityMain = () => {
 
       {/* 2) 트렌딩 + 피드는 Container 안 */}
       <S.Container>
-        <TrendingCarousel />
+        <TrendingCarousel onCardClick={handleTrendingCardClick} />
         <S.SectionDivider />
 
         <FeedGrid items={allItems} onCardClick={handleOpenPostModal} meNickname={meNickname} />

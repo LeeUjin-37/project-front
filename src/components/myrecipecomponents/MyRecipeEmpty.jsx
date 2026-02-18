@@ -17,7 +17,7 @@ const MyRecipeEmpty = ({
       setOpenLoginModal(true);
       return;
     }
-    navigate("/recipe"); // 레시피 탐색 페이지 경로로 수정
+    navigate("/foodrecommendation"); // 추천요리 페이지로 이동
   };
 
   const handleConfirmLogin = () => {
