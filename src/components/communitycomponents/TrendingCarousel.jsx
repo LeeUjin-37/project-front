@@ -10,10 +10,10 @@ import PostCard from "./PostCard";
 const GAP = 22; // 카드 사이 간격(피그마상 40px, 넘 넓어보여서 줄임)
 const VISIBLE = 4; // 화면에 보이는 카드 수(사진 4장)
 
-const TrendingCarousel = () => {
+const TrendingCarousel = ({onCardClick }) => {
   // 더미 데이터(형태만) ㅡ 나중에 API로 교체
   const items = useMemo( // 렌더링마다 배열이 새로 만들어지지 않도록 고정
-    () => Array.from({ length: 8 }, (_, i) => ({ id: i + 1 })),
+    () => Array.from({ length: 8 }, (_, i) => ({ id: i + 1, recipeName: `트렌딩 레시피 ${i + 1}`, })),
     [],
   );
 
@@ -66,6 +66,7 @@ const TrendingCarousel = () => {
     // maxIndex를 넘지 않도록 제한
     setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
   };
+  
 
   return (
     <S.CarouselSection>
@@ -96,7 +97,7 @@ const TrendingCarousel = () => {
                 key={item.id}
                 item={item}
                 w={cardW}
-                onClick={() => console.log("post click", item.id)}
+                onClick={() => onCardClick?.(item)}
                 />
             ))}
           </S.CarouselTrack>

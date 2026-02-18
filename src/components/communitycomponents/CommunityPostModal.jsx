@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useState, useCallback, useRef } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 import * as S from "./CommunityPostModal.style";
 
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
@@ -37,7 +43,7 @@ const CommunityPostModal = ({
       if (!meNickname) return false;
       return String(c?.nickname ?? "").trim() === String(meNickname).trim();
     },
-    [meNickname]
+    [meNickname],
   );
 
   const handlePrev = useCallback(() => {
@@ -86,10 +92,10 @@ const CommunityPostModal = ({
       setEditingKey(null);
       setDraftText("");
     },
-    [draftText, onEditComment]
+    [draftText, onEditComment],
   );
 
-   useEffect(() => {
+  useEffect(() => {
     if (!open) return;
 
     setActiveIndex(0);
@@ -99,6 +105,8 @@ const CommunityPostModal = ({
     setEditingKey(null);
     setDraftText("");
   }, [open, post?.id]); // post 바뀔 때도 초기화되게
+
+  const [hoverKey, setHoverKey] = useState(null);
 
   // ✅ 최신 상태를 키다운 이벤트에서 쓰기 위해 ref로 보관
   const openMenuKeyRef = useRef(openMenuKey);
@@ -177,7 +185,14 @@ const CommunityPostModal = ({
 
           {hasImages ? (
             <S.ImageWrapper>
-              <S.HeroImage src={currentImage} alt="요리 인증 이미지" />
+              {/* ✅ 배경: 같은 이미지 cover + blur */}
+              <S.HeroBg src={currentImage} alt="" aria-hidden="true" />
+              <S.HeroBgDim aria-hidden="true" />
+
+              {/* ✅ 중앙 메인 이미지: contain */}
+              <S.HeroMain>
+                <S.HeroMainImg src={currentImage} alt="요리 인증 이미지" />
+              </S.HeroMain>
 
               {images.length > 1 && (
                 <S.NavControls>
@@ -308,7 +323,7 @@ const CommunityPostModal = ({
                                   if (isEditing) return;
 
                                   setOpenMenuKey((prev) =>
-                                    prev === key ? null : key
+                                    prev === key ? null : key,
                                   );
                                 }}
                               >
@@ -325,10 +340,18 @@ const CommunityPostModal = ({
                                   <S.MenuItem
                                     type="button"
                                     $primary
+                                    onMouseEnter={() =>
+                                      setHoverKey(key + "-edit")
+                                    }
+                                    onMouseLeave={() => setHoverKey(null)}
                                     onClick={() => startEdit(key, c)}
                                   >
                                     <S.MenuIcon
-                                      src="/assets/icons/default_pencil.svg"
+                                      src={
+                                        hoverKey === key + "-edit"
+                                          ? "/assets/icons/main_pencil.svg"
+                                          : "/assets/icons/default_pencil.svg"
+                                      }
                                       alt="수정"
                                     />
                                     수정
@@ -337,13 +360,21 @@ const CommunityPostModal = ({
                                   <S.MenuItem
                                     type="button"
                                     $danger
+                                    onMouseEnter={() =>
+                                      setHoverKey(key + "-del")
+                                    }
+                                    onMouseLeave={() => setHoverKey(null)}
                                     onClick={() => {
                                       setOpenMenuKey(null);
                                       onDeleteComment?.(c);
                                     }}
                                   >
                                     <S.MenuIcon
-                                      src="/assets/icons/default_trash.svg"
+                                      src={
+                                        hoverKey === key + "-del"
+                                          ? "/assets/icons/main_trash.svg"
+                                          : "/assets/icons/default_trash.svg"
+                                      }
                                       alt="삭제"
                                     />
                                     삭제
