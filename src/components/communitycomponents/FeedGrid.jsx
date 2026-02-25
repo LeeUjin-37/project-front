@@ -49,46 +49,55 @@ const FeedGrid = ({ items = [], onCardClick, meNickname }) => {
     return () => observer.disconnect();
   }, [loadMore]);
 
-  const buildMockPost = useCallback(
-    (item) => ({
-      id: item.id,
-      images: [
-        `${process.env.PUBLIC_URL}/assets/images/pancake.svg`,
-        `${process.env.PUBLIC_URL}/assets/images/tteokbokki.svg`,
-      ],
-      author: {
-        nickname: item.nickname ?? "파스타러버",
-        level: item.level ?? 4,
-      },
-      likes: item.likes ?? 80,
-      createdAt: item.createdAt ?? "2025. 12. 20",
-      recipeTitle: item.recipeName ?? "팬케이크",
-      content:
-        item.desc ??
-        "딸기 팬케이크 완성! 반죽이 쫀쫀하고 소스가 진짜 부드러워요. 가족들이 엄청 좋아했습니다",
-      ingredients: item.ingredients ?? ["밀가루", "생크림", "파슬리가루"],
-      xp: item.xp ?? 120,
-      comments: item.comments ?? [
-        { nickname: "금손수", time: "2초 전", text: "와 진짜 맛있어 보여요!" },
-        {
-          nickname: "요리왕금손수",
-          time: "5분 전",
-          text: "두번째 댓글도 테스트!",
-        },
-        { nickname: meNickname, time: "8분 전", text: "내 댓글 테스트🥲" },
-        { nickname: "테스트", time: "8분 전", text: "다른 사람 댓글" },
-      ],
-    }),
-    [meNickname],
-  );
+  // const buildMockPost = useCallback(
+  //   (item) => ({
+  //     id: item.id,
+  //     images: [
+  //       `${process.env.PUBLIC_URL}/assets/images/pancake.svg`,
+  //       `${process.env.PUBLIC_URL}/assets/images/tteokbokki.svg`,
+  //     ],
+  //     author: {
+  //       nickname: item.nickname ?? "파스타러버",
+  //       level: item.level ?? 4,
+  //     },
+  //     likes: item.likes ?? 80,
+  //     createdAt: item.createdAt ?? "2025. 12. 20",
+  //     recipeTitle: item.recipeName ?? "팬케이크",
+  //     content:
+  //       item.desc ??
+  //       "딸기 팬케이크 완성! 반죽이 쫀쫀하고 소스가 진짜 부드러워요. 가족들이 엄청 좋아했습니다",
+  //     ingredients: item.ingredients ?? ["밀가루", "생크림", "파슬리가루"],
+  //     xp: item.xp ?? 120,
+  //     comments: item.comments ?? [
+  //       { nickname: "금손수", time: "2초 전", text: "와 진짜 맛있어 보여요!" },
+  //       {
+  //         nickname: "요리왕금손수",
+  //         time: "5분 전",
+  //         text: "두번째 댓글도 테스트!",
+  //       },
+  //       { nickname: meNickname, time: "8분 전", text: "내 댓글 테스트🥲" },
+  //       { nickname: "테스트", time: "8분 전", text: "다른 사람 댓글" },
+  //     ],
+  //   }),
+  //   [meNickname],
+  // );
+
+
+
+  // const handleCardClick = useCallback(
+  //   (item) => {
+  //     const post = buildMockPost(item);
+  //     onCardClick?.(post);
+  //   },
+  //   [buildMockPost, onCardClick],
+  // );
 
   const handleCardClick = useCallback(
-    (item) => {
-      const post = buildMockPost(item);
-      onCardClick?.(post);
-    },
-    [buildMockPost, onCardClick],
-  );
+  (item) => {
+    onCardClick?.(item);   // 그대로 전달
+  },
+  [onCardClick],
+);
 
   return (
     <S.FeedGridSection>

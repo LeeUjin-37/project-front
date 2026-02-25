@@ -16,6 +16,7 @@ const useAuthStore = create(
       // partialize: localStorage에 저장할 값만 골라내는 필터
       partialize: (state) => ({
         isAuthenticated: state.isAuthenticated,
+        user: state.user, 
       }),
     }
   )

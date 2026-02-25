@@ -21,7 +21,10 @@ const PostCard = ({ item, w, width, onClick, meNickname }) => {
     });
   };
 
-  const recipeImage = item?.recipeImage ?? "/assets/images/oatmeal.png";
+  // const recipeImage = item?.recipeImage ?? "/assets/images/oatmeal.png";  
+  // recipeImage 수정
+  const recipeImage =
+    item?.images?.[0] ?? item?.recipeImage ?? "/assets/images/oatmeal.png";
   const profileImage = item?.profileImage ?? "/assets/images/pinggu.png";
   const recipeName = item?.recipeName ?? "김치찌개";
   const nickname = item?.nickname ?? "굴곡밥러버";
@@ -66,9 +69,7 @@ const PostCard = ({ item, w, width, onClick, meNickname }) => {
         <S.CardMetaRow>
           <S.MetaLeft>
             {/* ✅ 닉네임 도트 표시 */}
-            <S.UserNickName $mine={isMine}>
-              {nickname}
-            </S.UserNickName>
+            <S.UserNickName $mine={isMine}>{nickname}</S.UserNickName>
           </S.MetaLeft>
 
           <S.MetaCenter>

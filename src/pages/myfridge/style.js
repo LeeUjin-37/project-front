@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { flexCenter, flexCenterColumn } from "../../styles/common";
+import { flexCenter, flexCenterColumn, FONT_STYLE } from "../../styles/common";
 
 const S = {};
 
@@ -26,10 +26,9 @@ S.FridgeTitle = styled.h2`
   margin: 0 auto 24px auto;
   width: 100%;
   text-align: center;
-  font-family: 'Pretendard';
-  font-size: ${({ theme }) => theme.FONT_SIZE.h6};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.PRETENDARD.REGULAR};
-  color: #111111;
+  ${FONT_STYLE.GIANTS.H6_REGULAR};
+  color: ${({ theme }) => theme.PALLETE.mainblack};
+  margin-bottom: 16px;
 `;
 
 /* ====================

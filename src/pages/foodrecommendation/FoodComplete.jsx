@@ -1,31 +1,36 @@
 import React, { useRef, useState } from "react";
 import S from "./style";
-// import {heroImage} from "/assets/images/kimchi_soup.png"; // 실제 이미지로 교체
-
+import usePostStore from "../../store/postStore";
+import useAuthStore from "../../store/authStore";
 
 const FoodComplete = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
+  const [review, setReview] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+
+  const { addPost } = usePostStore();
+  const { user } = useAuthStore();
+
   const fileInputRef = useRef(null);
 
   const toggleItem = (index) => {
     setSelectedItems((prev) =>
-      prev.includes(index)
-        ? prev.filter((v) => v !== index)
-        : [...prev, index]
+      prev.includes(index) ? prev.filter((v) => v !== index) : [...prev, index],
     );
   };
 
-    // 파일 선택 핸들러
+  // 파일 선택 핸들러
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // 확장자 체크
     if (!["image/jpeg", "image/png"].includes(file.type)) {
       alert("JPG 또는 PNG 파일만 업로드 가능합니다.");
       return;
     }
+
+    setImageFile(file);
 
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -33,32 +38,96 @@ const FoodComplete = () => {
     };
     reader.readAsDataURL(file);
   };
+
+  const ingredientList = [
+    "밥 1공기",
+    "김치",
+    "고춧가루",
+    "대파",
+    "마늘",
+    "돼지고기",
+    "참치",
+    "두부",
+    "양파",
+    "고추장",
+    "간장",
+    "소금",
+    "후추",
+    "물",
+    "멸치육수",
+    "파슬리",
+  ];
+
+  // ✅ 완료 버튼 클릭
+  const handleSubmit = () => {
+    if (!previewImage) {
+      alert("사진을 업로드해주세요.");
+      return;
+    }
+
+    if (!review.trim()) {
+      alert("후기를 작성해주세요.");
+      return;
+    }
+
+    const selectedIngredientNames = selectedItems.map(
+      (index) => ingredientList[index],
+    );
+
+const newPost = {
+  id: Date.now(),
+
+  recipeTitle: "얼큰한 김치찌개",  // 변경
+  content: review,
+
+  images: [previewImage],           // 배열로 변경
+
+  ingredients: selectedIngredientNames,
+
+  author: {                         // 객체로 통일
+    id: user?.id || 1,
+    nickname: user?.nickname || "요리왕곰순",
+    level: user?.level || 1,
+  },
+
+  createdAt: new Date().toLocaleDateString(),
+  likes: 0,
+  xp: selectedIngredientNames.length * 10, // 선택사항
+  comments: [],
+};
+
+    addPost(newPost);
+
+    alert("커뮤니티에 업로드되었습니다!");
+
+    // 초기화
+    setReview("");
+    setPreviewImage(null);
+    setSelectedItems([]);
+  };
+
   return (
     <S.FCPage>
-        {/* ================= Hero ================= */}
-        <S.FCHero>
-          <S.FCHeroImage src="/assets/images/kimchi_soup.png" alt="요리 이미지" />
-          <S.FCHeroOverlay>
-            <S.FCHeroInner>
-              <S.FCTitle>얼큰한 김치찌개</S.FCTitle>
-              <S.FCSubText>축하합니다! 요리를 완성하셨네요~!</S.FCSubText>
-            </S.FCHeroInner>
-          </S.FCHeroOverlay>
-        </S.FCHero>
-      <S.FCWrapper>
+      <S.FCHero>
+        <S.FCHeroImage src="/assets/images/kimchi_soup.png" alt="요리 이미지" />
+        <S.FCHeroOverlay>
+          <S.FCHeroInner>
+            <S.FCTitle>얼큰한 김치찌개</S.FCTitle>
+            <S.FCSubText>축하합니다! 요리를 완성하셨네요~!</S.FCSubText>
+          </S.FCHeroInner>
+        </S.FCHeroOverlay>
+      </S.FCHero>
 
-        {/* ================= Content ================= */}
+      <S.FCWrapper>
         <S.FCContent>
-          {/* 영상 사진 업로드 */}
+          {/* 사진 업로드 */}
           <S.FCSection>
             <S.FCSectionTitleRow>
               <S.FCSectionIcon src="/assets/icons/add-web.png" />
               <S.FCSectionHeading>완성 사진 업로드</S.FCSectionHeading>
             </S.FCSectionTitleRow>
 
-            <S.FCUploadBox
-              onClick={() => fileInputRef.current.click()}
-            >
+            <S.FCUploadBox onClick={() => fileInputRef.current.click()}>
               {previewImage ? (
                 <img
                   src={previewImage}
@@ -78,7 +147,6 @@ const FoodComplete = () => {
               )}
             </S.FCUploadBox>
 
-            {/* 숨겨진 input */}
             <input
               type="file"
               accept="image/jpeg, image/png"
@@ -88,18 +156,22 @@ const FoodComplete = () => {
             />
           </S.FCSection>
 
-          {/* 요리 후기 */}
+          {/* 후기 */}
           <S.FCSection>
             <S.FCSectionTitleRow>
               <S.FCSectionIcon src="/assets/icons/comment-one.png" />
               <S.FCSectionHeading>요리후기</S.FCSectionHeading>
             </S.FCSectionTitleRow>
 
-            <S.FCTextarea placeholder="요리를 만들어본 소감을 자유롭게 남겨주세요." />
+            <S.FCTextarea
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+              placeholder="요리를 만들어본 소감을 자유롭게 남겨주세요."
+            />
           </S.FCSection>
 
-          {/* 사용한 재료 체크 */}
-         <S.FCSection>
+          {/* 재료 체크 */}
+          <S.FCSection>
             <S.FCSectionTitleRow>
               <S.FCSectionIcon src="/assets/icons/product.png" />
               <S.FCSectionHeading>사용한 재료 체크</S.FCSectionHeading>
@@ -117,8 +189,8 @@ const FoodComplete = () => {
                     <S.FCCheckIcon
                       src={
                         isActive
-                          ? "/assets/icons/hover_check_circle_broken.svg" // 오렌지 아이콘
-                          : "/assets/icons/default_check_circle_broken.svg"   // 회색 아이콘
+                          ? "/assets/icons/thick_check_orange.png"
+                          : "/assets/icons/thick_check_grey.png"
                       }
                       alt="check"
                     />
@@ -132,26 +204,6 @@ const FoodComplete = () => {
               </S.FCSelectedCount>
             </S.FCIngredientBox>
           </S.FCSection>
-
-          {/* 획득 XP */}
-          <S.FCSection>
-            <S.FCSectionTitleRow>
-              <S.FCSectionIcon src="/assets/icons/circle-double-up.png" />
-              <S.FCSectionHeading>획득 XP</S.FCSectionHeading>
-            </S.FCSectionTitleRow>
-            <S.FCXPBox>
-              <S.FCXPLabel>총 획득 XP</S.FCXPLabel>
-              <S.FCProgressBar>
-                <S.FCProgressOrange value={20} />
-              </S.FCProgressBar>
-
-              <S.FCXPLabel>현재 Lv.12</S.FCXPLabel>
-              <S.FCProgressBar>
-                <S.FCProgressBlue value={80} />
-              </S.FCProgressBar>
-            </S.FCXPBox>
-          </S.FCSection>
-
           {/* 커뮤니티 공유 */}
           <S.FCSection>
             <S.FCSectionTitleRow>
@@ -165,7 +217,9 @@ const FoodComplete = () => {
           </S.FCSection>
 
           {/* 완료 버튼 */}
-          <S.FCCompleteButton>완료 인증하기</S.FCCompleteButton>
+          <S.FCCompleteButton onClick={handleSubmit}>
+            완료 인증하기
+          </S.FCCompleteButton>
         </S.FCContent>
       </S.FCWrapper>
     </S.FCPage>

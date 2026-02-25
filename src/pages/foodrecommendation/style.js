@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FONT_STYLE } from "../../styles/common";
+import { flexBetweenRow, flexCenter, FONT_STYLE } from "../../styles/common";
 
 const S = {};
 
@@ -10,7 +10,7 @@ const S = {};
 S.Page = styled.main`
   width: 100%;
   min-height: 100vh;
-  background: #fff;
+  background: ${({ theme }) => theme.PALLETE.background.white};
 `;
 
 S.Container = styled.div`
@@ -32,21 +32,24 @@ S.HeaderSection = styled.section`
   width: 100%;
   margin-top: 68px;
   padding-bottom: 24px;
+
+  /* 좌우 여백 추가 */
+  padding-left: 130px;
+  padding-right: 130px;
 `;
 
 S.SectionTitle = styled.h2`
-  ${FONT_STYLE.GIANTS.H7_REGULAR};
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 32px;
-  margin-bottom: 12px;
+  ${FONT_STYLE.GIANTS.H6_REGULAR};
+  color: ${({ theme }) => theme.PALLETE.mainblack};
+  margin-bottom: 16px;
 `;
+
+
 
 /* 검색 + 정렬 Row */
 S.SearchRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  ${flexBetweenRow};
+  gap: 20px;
 `;
 
 /* 검색 박스 */
@@ -58,21 +61,26 @@ S.SearchWrap = styled.div`
 
 S.SearchInput = styled.input`
   width: 100%;
-  height: 40px;
+  height: 100%;
+
+  /* 아이콘 자리 확보 */
   padding: 0 44px 0 16px;
+
   border-radius: 5px;
-  border: 1px solid #ddd;
-  font-family: "Pretendard";
-  font-size: 14px;
-  outline: none;
+  border: 1px solid transparent;
+  background-color: ${({ theme }) => theme.PALLETE.gray[50]};
+
+  ${FONT_STYLE.PRETENDARD.H7_REGULAR};
 
   &::placeholder {
-    color: #999;
-  }
+    color: ${({ theme }) => theme.PALLETE.gray[800]};
+  };
 
   &:focus {
-    border: 1px solid #ff4d37;
-  }
+    outline: none;
+    border-color: ${({ theme }) => theme.PALLETE.primary.main};
+    background-color: ${({ theme }) => theme.PALLETE.background.white};
+  };
 `;
 
 S.SearchButton = styled.button`
@@ -80,33 +88,49 @@ S.SearchButton = styled.button`
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
+
   border: none;
   background: transparent;
-  cursor: pointer;
   padding: 0;
+  cursor: pointer;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 S.SearchIcon = styled.img`
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
 `;
 
 /* 정렬 버튼 */
 S.SortButton = styled.button`
   height: 40px;
-  padding: 0 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background: #fff;
-  font-family: "Pretendard";
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
+  width: 130px;
+  padding: 0 10px;   
+  white-space: nowrap;  
 
-  &:hover {
-    border-color: #999;
-  }
+  ${flexCenter}
+  gap: 6px;
+
+  border-radius: 5px;
+  border: 1px solid ${({ theme }) => theme.PALLETE.gray[300]};
+  background-color: ${({ theme }) => theme.PALLETE.background.white};
+
+  ${FONT_STYLE.PRETENDARD.H7_REGULAR};
+  color: ${({ theme, $active }) => $active ? theme.PALLETE.primary.main : theme.PALLETE.mainblack};
+  font-weight: ${({ $active }) => $active? 600 : 400};
+ 
+  cursor: pointer;
+   
 `;
+
+// 필터 아이콘
+S.FilterIcon = styled.img`
+  width: 24px;
+  height: 24px;
+`
 
 /* ===================================================
    구분선 (커뮤니티 동일)
@@ -166,21 +190,47 @@ S.FilterIcon = styled.img`
   width: 20px;
 `;
 
+S.DropdownWrap = styled.div`
+  position: relative;
+`;
+
 S.DropdownMenu = styled.div`
   position: absolute;
-  top: 40px;
+  top: 46px;
   right: 0;
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 6px;
+
+  width: 130px;
+
+  background: ${({ theme }) => theme.PALLETE.background.white};
+  border: 1px solid ${({ theme }) => theme.PALLETE.gray[200]};
+  border-radius: 8px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  z-index: 100;
 `;
 
 S.DropdownItem = styled.button`
   width: 100%;
-  padding: 8px 12px;
+  padding: 12px 16px;
+
   border: none;
   background: transparent;
+
   text-align: left;
+  cursor: pointer;
+
+  ${FONT_STYLE.PRETENDARD.H7_REGULAR};
+
+  color: ${({ theme, $active }) =>
+    $active
+      ? theme.PALLETE.primary.main
+      : theme.PALLETE.mainblack};
+
+  &:hover {
+    color: ${({ theme }) => theme.PALLETE.primary.main};
+    background: ${({ theme }) => theme.PALLETE.gray[50]};
+  }
 `;
 
 
