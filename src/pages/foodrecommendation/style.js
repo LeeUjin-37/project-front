@@ -374,7 +374,7 @@ S.FCIngredientBox = styled.div`
   width: 1420px;
   height: 427px;
   border: 1px solid #d9d9d9;
-  border-radius: 6px;
+  /* border-radius: 10px; */
   background: #fff;
   padding: 32px 40px;
   position: relative;
@@ -419,34 +419,60 @@ S.FCSelectedCount = styled.div`
 /* ================= XP ================= */
 
 S.FCXPBox = styled.div`
-  border: 1px solid #ddd;
-  background: #fff;
-  padding: 24px;
+  background: #ffffff;
+  padding: 28px 32px;
+  /* border-radius: 10px; */
+  border: 1px solid #e0e0e0;
 `;
 
 S.FCXPLabel = styled.div`
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid #ff4d26;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  background: white;
+  margin-bottom: 8px;
+`;
+
+S.FCXPLabelRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+`;
+
+S.FCXPText = styled.div`
   font-size: 14px;
-  margin: 12px 0;
+  font-weight: 500;
+  color: #333;
 `;
 
 S.FCProgressBar = styled.div`
   width: 100%;
-  height: 10px;
-  background: #eee;
-  border-radius: 6px;
+  height: 12px;
+  background: #b8b8b8;
+  border-radius: 8px;
   overflow: hidden;
+  margin-bottom: 24px;
+  position: relative;
 `;
 
 S.FCProgressOrange = styled.div`
-  width: ${({ value }) => value}%;
   height: 100%;
-  background: #ff7a00;
+  background: linear-gradient(90deg, #f59e0b, #ff4d26);
+  border-radius: 8px;
+  width: ${({ value }) => value}%;
+  transition: width 0.3s ease;
 `;
 
 S.FCProgressBlue = styled.div`
-  width: ${({ value }) => value}%;
   height: 100%;
-  background: #2d9cff;
+  background: linear-gradient(90deg, #1d4ed8, #06b6d4);
+  border-radius: 8px;
+  width: ${({ value }) => value}%;
+  transition: width 0.3s ease;
 `;
 
 /* ================= 공유 ================= */

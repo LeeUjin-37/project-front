@@ -21,6 +21,7 @@ import LoginPage from "../pages/loginandjoin/LoginPage";
 import JoinPage from "../pages/loginandjoin/JoinPage";
 import NotFound from "../pages/notfound/NotFound";
 import MyPosts from "../pages/mypost/MyPosts";
+import MyPostsDetail from "../pages/mypost/MyPostsDetail";
 import MyRecipe from "../pages/myrecipe/MyRecipe";
 
 const CommunityRedirect = () => {
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "post/:postId", // 게시물 클릭 시 이동할 주소
-            element: <PostPopUp />,
+            element: <MyPostsDetail />,
           },
         ],
       },

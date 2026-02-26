@@ -1,34 +1,21 @@
 import React, { useMemo } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate, Outlet, Navigate } from "react-router-dom";
 import usePostStore from "../../store/postStore";
 import useAuthStore from "../../store/authStore";
 import FeedGrid from "../../components/communitycomponents/FeedGrid";
+import S from "./style";
 
 const MyPosts = () => {
   const { posts } = usePostStore();
-  const { member } = useAuthStore(); // 🔥 authStore에 member로 저장되어 있음
+  const { user, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
 
-  const meNickname = member?.nickname ?? null;
-
-  // ===== 내가 쓴 글만 필터링 =====
+  // useMemo는 항상 먼저 실행
   const myItems = useMemo(() => {
-    if (!member) return [];
+    if (!user) return [];
 
     return posts
-      .filter((p) => {
-        // id 비교 우선
-        if (p.author?.id && member.id) {
-          return p.author.id === member.id;
-        }
-
-        // id 없으면 nickname fallback
-        return (
-          p.author?.nickname &&
-          member.nickname &&
-          p.author.nickname === member.nickname
-        );
-      })
+      .filter((p) => p.author?.id === user.id)
       .map((post) => ({
         id: post.id,
         recipeName: post.recipeTitle,
@@ -41,40 +28,47 @@ const MyPosts = () => {
         createdAt: post.createdAt,
         comments: post.comments ?? [],
       }));
-  }, [posts, member]);
+  }, [posts, user]);
+
+  // Hook 아래에서 로그인 체크
+  if (!isAuthenticated || !user) {
+    return <Navigate to="/login" replace />;
+  }
 
   const handleCardClick = (item) => {
     navigate(`/myposts/post/${item.id}`);
   };
 
-  // ===== 로그인 안 되어 있으면 안내 =====
-  if (!member) {
-    return (
-      <div style={{ padding: "40px" }}>
-        <h1>나의 커뮤니티 게시물</h1>
-        <p>로그인이 필요합니다.</p>
-      </div>
-    );
-  }
+return (
+  <S.Page>
+      <S.Container>
 
-  return (
-    <div style={{ padding: "40px" }}>
-      <h1>나의 커뮤니티 게시물</h1>
+        {/* ===== 헤더 ===== */}
+        <S.HeaderSection>
+          <S.Title>나의 커뮤니티 게시물</S.Title>
+        </S.HeaderSection>
 
-      {myItems.length === 0 ? (
-        <p>작성한 게시글이 없습니다.</p>
-      ) : (
-        <FeedGrid
-          items={myItems}
-          meNickname={meNickname}
-          onCardClick={handleCardClick}
-        />
-      )}
+        <S.FullDivider />
 
-      {/* 🔥 중첩 모달 자리 */}
-      <Outlet />
-    </div>
-  );
+        {/* ===== 피드 영역 ===== */}
+        <S.FeedGridSection>
+          {myItems.length === 0 ? (
+            <S.EmptyText>
+              작성한 게시글이 없습니다.
+            </S.EmptyText>
+          ) : (
+            <FeedGrid
+              items={myItems}
+              meNickname={user.nickname}
+              onCardClick={handleCardClick}
+            />
+          )}
+        </S.FeedGridSection>
+
+        <Outlet />
+      </S.Container>
+    </S.Page>
+);
 };
 
 export default MyPosts;

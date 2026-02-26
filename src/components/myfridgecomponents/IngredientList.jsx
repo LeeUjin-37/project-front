@@ -2,7 +2,14 @@ import React from "react";
 import IngredientCard from "./IngredientCard";
 import S from "../../pages/myfridge/style";
 
-const IngredientList = ({ items, deleteMode, selectedIds, onToggle }) => {
+const IngredientList = ({
+  items,
+  deleteMode,
+  selectedIds,
+  onToggle,
+  onEdit,
+  editMode,
+}) => {
   return (
     <S.GridWrapperStyle>
       <S.GridStyle>
@@ -14,7 +21,14 @@ const IngredientList = ({ items, deleteMode, selectedIds, onToggle }) => {
             quantity={item.quantity}
             expiredAt={item.expiredAt}
             active={deleteMode && selectedIds.includes(item.fridgeId)}
-            onClick={() => deleteMode && onToggle(item.fridgeId)}
+            deleteMode={deleteMode}
+            onClick={() => {
+              if (deleteMode) {
+                onToggle(item.fridgeId);
+              } else if (editMode) {
+                onEdit(item);
+              }
+            }}
           />
         ))}
       </S.GridStyle>

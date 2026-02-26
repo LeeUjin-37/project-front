@@ -29,7 +29,15 @@ const BASE_INGREDIENTS = [
   { id: 51, name: "계란", category: "기타", icon: "🥚" },
 ];
 
-const CATEGORIES = ["전체", "채소", "육류", "해산물", "유제품", "가공품", "기타"];
+const CATEGORIES = [
+  "전체",
+  "채소",
+  "육류",
+  "해산물",
+  "유제품",
+  "가공품",
+  "기타",
+];
 
 const MyFridge = () => {
   const [ingredients, setIngredients] = useState([]);
@@ -41,11 +49,13 @@ const MyFridge = () => {
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState([]);
 
+  const [editItem, setEditItem] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
   const toggleSelected = (fridgeId) => {
     setSelectedIds((prev) =>
       prev.includes(fridgeId)
         ? prev.filter((v) => v !== fridgeId)
-        : [...prev, fridgeId]
+        : [...prev, fridgeId],
     );
   };
 
@@ -88,7 +98,7 @@ const MyFridge = () => {
 
   const confirmDelete = () => {
     setIngredients((prev) =>
-      prev.filter((item) => !selectedIds.includes(item.fridgeId))
+      prev.filter((item) => !selectedIds.includes(item.fridgeId)),
     );
     setSelectedIds([]);
     setIsDeleteMode(false);
@@ -137,7 +147,9 @@ const MyFridge = () => {
 
               <S.LayoutAddButton
                 onClick={() => {
-                  alert("재료 수정 기능은 다음 단계에서 붙이면 됩니다.");
+                  setIsEditMode((prev) => !prev);
+                  setIsDeleteMode(false);
+                  setSelectedIds([]);
                 }}
               >
                 재료 수정
@@ -147,21 +159,19 @@ const MyFridge = () => {
         </S.FridgeHeaderInner>
       </S.FridgeHeaderSection>
 
-
       <S.MyFridgeContainer>
-
         {/* ✅ 재료가 있을 때 배너 표시 */}
-{ingredients.length > 0 && (
-  <S.RecommendBanner>
-    <S.BannerBackground>
-      <S.BannerOverlay>
-        <Link to="/foodrecommendation">
-          <S.BannerButton>추천 요리 확인</S.BannerButton>
-        </Link>
-      </S.BannerOverlay>
-    </S.BannerBackground>
-  </S.RecommendBanner>
-)}
+        {ingredients.length > 0 && (
+          <S.RecommendBanner>
+            <S.BannerBackground>
+              <S.BannerOverlay>
+                <Link to="/foodrecommendation">
+                  <S.BannerButton>추천 요리 확인</S.BannerButton>
+                </Link>
+              </S.BannerOverlay>
+            </S.BannerBackground>
+          </S.RecommendBanner>
+        )}
 
         {ingredients.length === 0 && !isAddOpen && (
           <S.EmptyWrapper>
@@ -173,8 +183,10 @@ const MyFridge = () => {
           <IngredientList
             items={visibleIngredients}
             deleteMode={isDeleteMode}
+            editMode={isEditMode}
             selectedIds={selectedIds}
             onToggle={toggleSelected}
+            onEdit={setEditItem}
           />
         )}
 
@@ -184,6 +196,61 @@ const MyFridge = () => {
             onClose={() => setIsAddOpen(false)}
             onSubmit={handleAddIngredients}
           />
+        )}
+
+        {editItem && (
+          <S.ModalOverlay>
+            <S.ModalContent>
+              <S.ModalBody>
+                <h3>재료 수정</h3>
+
+                <S.SelectedRow>
+                  <div>수량</div>
+                  <input
+                    type="number"
+                    min="0"
+                    value={editItem.quantity}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setEditItem({
+                        ...editItem,
+                        quantity: value < 0 ? 0 : value,
+                      });
+                    }}
+                  />
+                </S.SelectedRow>
+
+                <S.SelectedRow>
+                  <div>유통기한</div>
+                  <input
+                    type="date"
+                    value={editItem.expiredAt}
+                    onChange={(e) =>
+                      setEditItem({
+                        ...editItem,
+                        expiredAt: e.target.value,
+                      })
+                    }
+                  />
+                </S.SelectedRow>
+
+                <S.ModalFooter>
+                  <S.AddButton
+                    onClick={() => {
+                      setIngredients((prev) =>
+                        prev.map((v) =>
+                          v.fridgeId === editItem.fridgeId ? editItem : v,
+                        ),
+                      );
+                      setEditItem(null);
+                    }}
+                  >
+                    수정 완료
+                  </S.AddButton>
+                </S.ModalFooter>
+              </S.ModalBody>
+            </S.ModalContent>
+          </S.ModalOverlay>
         )}
       </S.MyFridgeContainer>
     </>

@@ -33,7 +33,9 @@ const AddIngredientDetailModal = ({ onClose, onSubmit, baseIngredients }) => {
     });
   };
 
-  const visibleBase = baseIngredients.filter((x) => x.category === activeCategory);
+  const visibleBase = baseIngredients.filter(
+    (x) => x.category === activeCategory,
+  );
 
   const handleSubmit = () => {
     const result = Object.entries(selectedItems).map(([baseId, data]) => ({
@@ -90,8 +92,12 @@ const AddIngredientDetailModal = ({ onClose, onSubmit, baseIngredients }) => {
                   <div>{item.name}</div>
                   <input
                     type="number"
+                    min="0"
                     value={data.quantity}
-                    onChange={(e) => handleQuantityChange(baseId, e.target.value)}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      handleQuantityChange(baseId, value < 0 ? 0 : value);
+                    }}
                   />
                   <input
                     type="date"

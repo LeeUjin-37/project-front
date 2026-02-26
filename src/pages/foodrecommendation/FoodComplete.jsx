@@ -1,17 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import S from "./style";
 import usePostStore from "../../store/postStore";
 import useAuthStore from "../../store/authStore";
+import { useNavigate } from "react-router-dom";
 
 const FoodComplete = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
   const [review, setReview] = useState("");
   const [imageFile, setImageFile] = useState(null);
-
+  const [animatedOrange, setAnimatedOrange] = useState(0);
+  const [animatedBlue, setAnimatedBlue] = useState(0);
+  const xpRef = useRef(null);
   const { addPost } = usePostStore();
   const { user } = useAuthStore();
-
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
   const toggleItem = (index) => {
@@ -58,7 +61,28 @@ const FoodComplete = () => {
     "파슬리",
   ];
 
-  // ✅ 완료 버튼 클릭
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setAnimatedOrange(20);
+          setAnimatedBlue(90);
+          observer.disconnect(); // 한 번만 실행
+        }
+      },
+      {
+        threshold: 0.4, // 40% 보이면 실행
+      },
+    );
+
+    if (xpRef.current) {
+      observer.observe(xpRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // 완료 버튼 클릭
   const handleSubmit = () => {
     if (!previewImage) {
       alert("사진을 업로드해주세요.");
@@ -74,36 +98,40 @@ const FoodComplete = () => {
       (index) => ingredientList[index],
     );
 
-const newPost = {
-  id: Date.now(),
+    const newPost = {
+      id: Date.now(),
 
-  recipeTitle: "얼큰한 김치찌개",  // 변경
-  content: review,
+      recipeTitle: "얼큰한 김치찌개", // 변경
+      content: review,
 
-  images: [previewImage],           // 배열로 변경
+      images: [previewImage], // 배열로 변경
 
-  ingredients: selectedIngredientNames,
+      ingredients: selectedIngredientNames,
 
-  author: {                         // 객체로 통일
-    id: user?.id || 1,
-    nickname: user?.nickname || "요리왕곰순",
-    level: user?.level || 1,
-  },
+      author: {
+        // 객체로 통일
+        id: user?.id || 1,
+        nickname: user?.nickname || "요리왕곰순",
+        level: user?.level || 1,
+      },
 
-  createdAt: new Date().toLocaleDateString(),
-  likes: 0,
-  xp: selectedIngredientNames.length * 10, // 선택사항
-  comments: [],
-};
+      createdAt: new Date().toLocaleDateString(),
+      likes: 0,
+      xp: selectedIngredientNames.length * 10, // 선택사항
+      comments: [],
+    };
 
-    addPost(newPost);
+ addPost(newPost);
 
-    alert("커뮤니티에 업로드되었습니다!");
+alert("커뮤니티에 업로드되었습니다!");
 
-    // 초기화
-    setReview("");
-    setPreviewImage(null);
-    setSelectedItems([]);
+// 초기화
+setReview("");
+setPreviewImage(null);
+setSelectedItems([]);
+
+// 내 게시글 페이지로 이동
+navigate("/myposts"); // ← 경로는 당신 프로젝트에 맞게 수정
   };
 
   return (
@@ -204,6 +232,38 @@ const newPost = {
               </S.FCSelectedCount>
             </S.FCIngredientBox>
           </S.FCSection>
+
+          {/* ================= 획득한 XP ================= */}
+
+          <S.FCSection>
+            <S.FCSectionTitleRow>
+              <S.FCSectionIcon src="/assets/icons/circle-double-up.png" />
+              <S.FCSectionHeading>획득한 XP</S.FCSectionHeading>
+            </S.FCSectionTitleRow>
+
+            <S.FCXPBox ref={xpRef}>
+              {/* 총 획득 XP */}
+              <S.FCXPLabelRow>
+                <S.FCXPLabel>총 획득 XP</S.FCXPLabel>
+                <S.FCXPText>20 / 200XP</S.FCXPText>
+              </S.FCXPLabelRow>
+
+              <S.FCProgressBar>
+                <S.FCProgressOrange value={animatedOrange} />
+              </S.FCProgressBar>
+
+              {/* 현재 레벨 */}
+              <S.FCXPLabelRow>
+                <S.FCXPLabel>현재 Lv. 12</S.FCXPLabel>
+                <S.FCXPText>180 / 200XP</S.FCXPText>
+              </S.FCXPLabelRow>
+
+              <S.FCProgressBar>
+                <S.FCProgressBlue value={animatedBlue} />
+              </S.FCProgressBar>
+            </S.FCXPBox>
+          </S.FCSection>
+
           {/* 커뮤니티 공유 */}
           <S.FCSection>
             <S.FCSectionTitleRow>
