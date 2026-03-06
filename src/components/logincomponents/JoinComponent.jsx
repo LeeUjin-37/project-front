@@ -48,13 +48,13 @@ const JoinComponent = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>
-          <p>이메일</p>
+    <>
+      <S.Form onSubmit={handleSubmit(onSubmit)}>
+        <S.Label>
+          <p>아이디</p>
           <S.Input
             type="text"
-            placeholder="아이디를 입력하세요."
+            placeholder="이메일을 입력하세요."
             {...register("memberEmail", {
               required: true,
               pattern: {
@@ -68,9 +68,9 @@ const JoinComponent = () => {
           {errors?.memberEmail?.type === "pattern" && (
             <p>이메일 양식에 맞게 입력해주세요</p>
           )}
-        </label>
+        </S.Label>
 
-        <label>
+        <S.Label>
           <p>비밀번호</p>
           <S.Input
             type="password"
@@ -90,9 +90,9 @@ const JoinComponent = () => {
               소문자, 숫자, 특수문자를 각 하나 포함한 8자리 이상이여야 합니다.
             </p>
           )}
-        </label>
+        </S.Label>
 
-        <label>
+        <S.Label>
           <p>비밀번호 확인</p>
           <S.Input
             type="password"
@@ -112,12 +112,10 @@ const JoinComponent = () => {
               },
             })}
           />
-          {errors?.memberPasswordConfirm && (
-            <p>비밀번호를 확인해주세요</p>
-          )}
-        </label>
+          {errors?.memberPasswordConfirm && <p>비밀번호를 확인해주세요</p>}
+        </S.Label>
 
-        <label>
+        <S.Label>
           <p>이름</p>
           <S.Input
             type="text"
@@ -126,13 +124,11 @@ const JoinComponent = () => {
               required: true,
             })}
           />
-          {errors?.memberName && (
-            <p>이름을 입력하세요</p>
-          )}
-        </label>
-        <button disabled={isSubmitting}>회원가입</button>
-      </form>
-    </div>
+          {errors?.memberName && <p>이름을 입력하세요</p>}
+        </S.Label>
+        <S.Button disabled={isSubmitting}>회원가입</S.Button>
+      </S.Form>
+    </>
   );
 };
 
